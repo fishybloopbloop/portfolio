@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zara Khan — Graphic Designer</title>
+<meta name="description" content="Zara Khan is a graphic designer crafting purposeful visuals, brand identities, and digital experiences.">
+<meta property="og:title" content="Zara Khan — Graphic Designer">
+<meta property="og:description" content="Crafting purposeful visuals, brand identities, and digital experiences.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0efed;
+  --grid:#00000009;
+  --menubar-bg:rgba(236,233,229,0.88);
+  --dock-bg:rgba(255,255,255,0.48);
+  --text:#1a1a18;
+  --muted:#5a5a55;
+  --faint:#9a9a94;
+  --accent:#2c5c8a;
+  --folder-blue:#4a90d9;
+  --win-bg:#f5f4f2;
+  --win-chrome:#e8e6e2;
+  --border:rgba(0,0,0,0.1);
+  --shadow-icon:0 2px 8px rgba(0,0,0,0.18);
+  --shadow-win:0 24px 80px rgba(0,0,0,0.28),0 8px 24px rgba(0,0,0,0.16),0 0 0 0.5px rgba(0,0,0,0.12);
+  --radius-win:12px;
+  --transition:0.2s cubic-bezier(0.4,0,0.2,1);
+}
+html,body{width:100%;height:100%;overflow:hidden;user-select:none;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+
+/* ── GRID BACKGROUND ── */
+.desktop-grid{
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── MENU BAR ── */
+.menubar{
+  position:fixed;top:0;left:0;right:0;height:28px;
+  background:var(--menubar-bg);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:0.5px solid rgba(0,0,0,0.12);
+  display:flex;align-items:center;
+  padding:0 14px;justify-content:space-between;
+  z-index:1000;font-size:12.5px;
+}
+.menubar-left{display:flex;align-items:center;gap:0;}
+.apple-logo{font-size:14px;margin-right:14px;cursor:default;}
+.menu-brand{font-weight:600;color:var(--text);margin-right:18px;cursor:default;}
+.menu-item{
+  color:var(--text);padding:0 10px;height:28px;
+  display:flex;align-items:center;cursor:default;
+  font-size:13px;border-radius:4px;
+  transition:background var(--transition);
+}
+.menu-item:hover{background:rgba(0,0,0,0.07);}
+.menubar-right{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--muted);}
+.menu-icons{display:flex;align-items:center;gap:10px;font-size:13px;}
+#clock{font-size:12px;color:var(--text);min-width:160px;text-align:right;}
+
+/* ── DESKTOP ── */
+.desktop{
+  position:fixed;
+  top:28px;left:0;right:0;
+  bottom:0;
+  z-index:1;
+  overflow:hidden;
+}
+
+/* ── DESKTOP ICONS (draggable) ── */
+.desk-icon{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;
+  gap:4px;cursor:default;
+  width:80px;
+  z-index:10;
+  transition:filter var(--transition);
+}
+.desk-icon:hover .icon-img{filter:brightness(1.08);}
+.desk-icon.selected .icon-label{
+  background:#2c5c8a;color:#fff;border-radius:3px;
+}
+.desk-icon.dragging{z-index:500;opacity:0.85;}
+.icon-img{
+  width:60px;height:60px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:44px;
+  filter:drop-shadow(var(--shadow-icon));
+  transition:transform 0.1s ease;
+  pointer-events:none;
+}
+.desk-icon:active .icon-img{transform:scale(0.93);}
+.icon-label{
+  font-size:11.5px;color:var(--text);
+  text-align:center;line-height:1.3;
+  padding:1px 4px;
+  max-width:80px;
+  text-shadow:0 1px 2px rgba(255,255,255,0.6);
+  pointer-events:none;
+}
+
+/* ── STICKY NOTE ── */
+.sticky{
+  position:absolute;
+  top:48px;left:20px;
+  width:210px;
+  background:linear-gradient(175deg,#fdf8a0,#f5ef84);
+  border:0.5px solid rgba(180,170,0,0.3);
+  border-radius:2px 8px 8px 2px;
+  padding:14px 14px 16px;
+  box-shadow:2px 3px 12px rgba(0,0,0,0.12),0 1px 0 rgba(255,255,255,0.5) inset;
+  z-index:10;
+  cursor:default;
+  font-size:13px;
+  line-height:1.65;
+}
+.sticky-title{font-weight:600;font-size:13px;margin-bottom:8px;color:#3a3800;}
+.sticky-item{color:#3a3800;display:block;}
+.sticky-item.done{text-decoration:line-through;color:#8a8600;}
+
+/* ── WINDOWS ── */
+.win-overlay{
+  position:fixed;inset:0;z-index:800;
+  display:none;pointer-events:none;
+}
+.win-overlay.has-windows{display:block;}
+
+.window{
+  position:absolute;
+  background:var(--win-bg);
+  border-radius:var(--radius-win);
+  box-shadow:var(--shadow-win);
+  min-width:520px;min-height:340px;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  pointer-events:all;
+  transform-origin:center center;
+  animation:winOpen 0.22s cubic-bezier(0.34,1.46,0.64,1) forwards;
+}
+@keyframes winOpen{
+  from{opacity:0;transform:scale(0.88);}
+  to{opacity:1;transform:scale(1);}
+}
+.window.closing{
+  animation:winClose 0.16s ease forwards;
+}
+@keyframes winClose{
+  to{opacity:0;transform:scale(0.92);}
+}
+
+/* Window chrome / title bar */
+.win-chrome{
+  height:40px;min-height:40px;
+  background:var(--win-chrome);
+  border-bottom:0.5px solid rgba(0,0,0,0.1);
+  display:flex;align-items:center;
+  padding:0 14px;
+  gap:8px;
+  cursor:default;
+  flex-shrink:0;
+  position:relative;
+  border-radius:var(--radius-win) var(--radius-win) 0 0;
+}
+.win-btn{
+  width:12px;height:12px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:0.5px solid rgba(0,0,0,0.2);
+  cursor:pointer;flex-shrink:0;
+  position:relative;font-size:0;
+  transition:filter 0.1s;
+}
+.win-btn:hover{filter:brightness(0.88);}
+.win-btn-close{background:#ff5f57;border-color:#e0443e;}
+.win-btn-min  {background:#febc2e;border-color:#d4a017;}
+.win-btn-max  {background:#28c840;border-color:#1aab29;}
+.win-btn-close::before,.win-btn-close::after{
+  content:'';position:absolute;
+  width:6px;height:0.5px;
+  background:rgba(0,0,0,0.4);
+  border-radius:1px;
+  opacity:0;transition:opacity 0.1s;
+}
+.win-btn-close::before{transform:rotate(45deg);}
+.win-btn-close::after{transform:rotate(-45deg);}
+.win-btn-close:hover::before,.win-btn-close:hover::after{opacity:1;}
+
+.win-title{
+  position:absolute;left:50%;transform:translateX(-50%);
+  font-size:13px;font-weight:500;color:var(--muted);
+  white-space:nowrap;pointer-events:none;
+}
+/* win-toolbar removed */
+
+/* Window content */
+.win-body{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:24px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.win-body::-webkit-scrollbar{width:6px;}
+.win-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
+
+/* Finder-style sidebar + content */
+.win-finder{display:flex;flex:1;overflow:hidden;}
+.win-sidebar{
+  width:160px;min-width:160px;
+  background:#e8e5e0;
+  border-right:0.5px solid rgba(0,0,0,0.1);
+  padding:12px 0;display:flex;flex-direction:column;gap:2px;
+}
+.sidebar-section{font-size:10.5px;font-weight:600;color:var(--faint);padding:6px 14px 2px;letter-spacing:0.06em;text-transform:uppercase;}
+.sidebar-item{
+  font-size:12.5px;color:var(--muted);
+  padding:5px 14px;cursor:default;
+  display:flex;align-items:center;gap:7px;
+  border-radius:5px;margin:0 4px;
+  transition:background 0.1s;
+}
+.sidebar-item:hover{background:rgba(0,0,0,0.07);}
+.sidebar-item.active{background:rgba(44,92,138,0.15);color:var(--accent);}
+.sidebar-icon{font-size:13px;}
+.win-content{flex:1;overflow-y:auto;padding:20px;}
+.win-content::-webkit-scrollbar{width:6px;}
+.win-content::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:3px;}
+
+/* Files inside window */
+.file-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+  gap:8px;
+}
+.file-item{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:8px 4px;border-radius:6px;cursor:default;
+  transition:background 0.12s;
+}
+.file-item:hover{background:rgba(0,0,0,0.06);}
+.file-item-icon{font-size:36px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));}
+.file-item-name{font-size:11px;color:var(--text);text-align:center;line-height:1.3;max-width:88px;}
+
+/* About / page content inside windows */
+.win-page{padding:28px 32px;}
+.win-page h1{
+  font-family:'Instrument Serif',serif;
+  font-size:32px;font-style:italic;
+  margin-bottom:12px;line-height:1.15;
+}
+.win-page h2{font-size:15px;font-weight:600;margin-bottom:8px;margin-top:20px;color:var(--text);}
+.win-page p{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:8px;}
+.win-page .tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;}
+.win-tag{font-size:11.5px;padding:4px 10px;border-radius:20px;background:#e8e5e0;color:var(--muted);border:0.5px solid rgba(0,0,0,0.1);}
+.skill-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+.skill-chip{font-size:11.5px;padding:4px 10px;border-radius:6px;background:#ddd9d2;color:var(--muted);}
+.contact-row{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.contact-link{font-size:13.5px;color:var(--accent);text-decoration:none;}
+.contact-link:hover{text-decoration:underline;}
+
+/* Resources page */
+.resource-list{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+.resource-row{
+  display:flex;align-items:center;gap:12px;
+  background:#eceae6;border-radius:8px;
+  padding:10px 14px;
+  border:0.5px solid rgba(0,0,0,0.07);
+}
+.resource-row-icon{font-size:22px;flex-shrink:0;}
+.resource-row-text .rname{font-size:13px;font-weight:500;color:var(--text);}
+.resource-row-text .rdesc{font-size:11.5px;color:var(--faint);}
+
+/* Archive grid */
+.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.archive-cell{
+  aspect-ratio:1;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;
+  color:rgba(0,0,0,0.35);border:0.5px dashed rgba(0,0,0,0.15);
+  background:#e8e5e0;
+  cursor:default;
+  transition:background 0.15s;
+}
+.archive-cell:hover{background:#ddd9d2;}
+.archive-cell span{font-size:11px;font-style:normal;font-family:'Inter',sans-serif;color:var(--faint);}
+
+/* ── DOCK ── */
+.dock-wrap{
+  position:fixed;bottom:12px;left:50%;transform:translateX(-50%);
+  z-index:900;display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.dock{
+  background:var(--dock-bg);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border:0.5px solid rgba(255,255,255,0.65);
+  border-bottom-color:rgba(0,0,0,0.1);
+  border-radius:20px;
+  padding:6px 12px 4px;
+  display:flex;align-items:flex-end;gap:5px;
+  box-shadow:0 0 0 0.5px rgba(0,0,0,0.07),0 8px 32px rgba(0,0,0,0.18),0 2px 8px rgba(0,0,0,0.08),inset 0 1px 0 rgba(255,255,255,0.55);
+}
+.dock-item{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;cursor:pointer;
+  transition:transform var(--transition);
+  padding-bottom:2px;
+}
+.dock-item:hover{transform:translateY(-10px) scale(1.2);}
+.dock-item:hover .dock-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+.dock-icon-img{
+  width:52px;height:52px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  transition:box-shadow var(--transition);
+}
+.dock-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(0,0,0,0.45);
+  margin-top:2px;
+  opacity:0;transition:opacity var(--transition);
+}
+.dock-item.open .dock-dot{opacity:1;}
+.dock-divider{
+  width:0.5px;height:42px;margin:0 3px 6px;
+  background:rgba(0,0,0,0.18);border-radius:1px;
+}
+.dock-tip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:rgba(30,30,30,0.82);color:#fff;
+  font-size:11.5px;font-weight:500;
+  padding:3px 9px;border-radius:6px;
+  white-space:nowrap;pointer-events:none;
+  opacity:0;transition:opacity 0.14s,transform 0.14s;
+  backdrop-filter:blur(4px);
+}
+.dock-tip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:4px solid transparent;border-top-color:rgba(30,30,30,0.82);
+}
+
+/* Dock icon backgrounds */
+.di-finder   {background:linear-gradient(145deg,#5fb0f0,#3a82cc);}
+.di-about    {background:linear-gradient(145deg,#c8d5c0,#8fa88a);}
+.di-projects {background:linear-gradient(145deg,#d5c5c0,#b8968f);}
+.di-archive  {background:linear-gradient(145deg,#d5d0c0,#b8b09a);}
+.di-resources{background:linear-gradient(145deg,#c0d5d0,#8fbcb8);}
+.di-mail     {background:linear-gradient(145deg,#5585c0,#3a5e9a);}
+.di-trash    {background:linear-gradient(145deg,#d8d5d0,#bfbbb5);}
+
+/* ── FORM ── */
+.win-form{display:flex;flex-direction:column;gap:10px;}
+.form-label{font-size:12px;font-weight:500;color:var(--muted);display:block;margin-bottom:4px;}
+.form-input,.form-textarea{
+  width:100%;padding:9px 12px;
+  border:0.5px solid rgba(0,0,0,0.2);
+  border-radius:7px;font-size:13.5px;font-family:inherit;
+  background:rgba(255,255,255,0.8);color:var(--text);
+  outline:none;transition:border-color var(--transition),box-shadow var(--transition);
+}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(44,92,138,0.1);}
+.form-textarea{height:90px;resize:vertical;}
+.form-btn{
+  align-self:flex-start;
+  background:var(--accent);color:#fff;border:none;
+  padding:9px 20px;border-radius:7px;font-size:13px;font-family:inherit;
+  font-weight:500;cursor:pointer;transition:opacity var(--transition);
+}
+.form-btn:hover{opacity:0.85;}
+
+/* z-index management for stacking */
+.window.focused{z-index:700;}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="desktop-grid"></div>
+
+<!-- MENU BAR -->
+<header class="menubar">
+  <div class="menubar-left">
+    <span class="apple-logo">&#xf8ff;</span>
+    <span class="menu-brand">Zara Khan's Portfolio</span>
+    <span class="menu-item" onclick="openWindow('contact')">Contact</span>
+    <span class="menu-item" onclick="openWindow('resume')">Resume</span>
+  </div>
+  <div class="menubar-right">
+    <div class="menu-icons">
+      <span>&#9711;</span>
+      <span>&#9646;</span>
+      <span>&#8984;</span>
+      <span>&#9889;</span>
+      <span>&#128269;</span>
+    </div>
+    <span id="clock"></span>
+  </div>
+</header>
+
+<!-- DESKTOP -->
+<div class="desktop" id="desktop">
+
+  <!-- STICKY NOTE -->
+  <div class="sticky" id="sticky" data-drag="true">
+    <div class="sticky-title">To do:</div>
+    <span class="sticky-item">Land my dream design job</span>
+    <span class="sticky-item">Drink water</span>
+    <span class="sticky-item done">Move to the UK</span>
+    <span class="sticky-item">Finish portfolio without losing my mind</span>
+    <span class="sticky-item">Build that banger spotify playlist</span>
+    <span class="sticky-item">World domination</span>
+    <span class="sticky-item done">Get really good at making pasta</span>
+    <span class="sticky-item">Travel somewhere new every year</span>
+  </div>
+
+  <!-- RESUME FILE — top right -->
+  <div class="desk-icon" id="icon-resume" style="right:160px;top:68px;" data-drag="true" ondblclick="openWindow('resume')">
+    <div class="icon-img">📄</div>
+    <div class="icon-label">Resume.pdf</div>
+  </div>
+
+  <!-- ABOUT ME FOLDER — top right -->
+  <div class="desk-icon" id="icon-about" style="right:70px;top:68px;" data-drag="true" ondblclick="openWindow('about')">
+    <div class="icon-img">📁</div>
+    <div class="icon-label">About Me</div>
+  </div>
+
+  <!-- PROJECT FOLDERS — bottom left -->
+  <div class="desk-icon" id="icon-p1" style="left:60px;bottom:180px;" data-drag="true" ondblclick="openWindow('p1')">
+    <div class="icon-img">📁</div>
+    <div class="icon-label">Project 01 (Verdant Studio)</div>
+  </div>
+  <div class="desk-icon" id="icon-p2" style="left:60px;bottom:100px;" data-drag="true" ondblclick="openWindow('p2')">
+    <div class="icon-img">📁</div>
+    <div class="icon-label">Project 02 (Ōra Ceramics)</div>
+  </div>
+  <div class="desk-icon" id="icon-p3" style="left:60px;bottom:20px;" data-drag="true" ondblclick="openWindow('p3')">
+    <div class="icon-img">📁</div>
+    <div class="icon-label">Project 03 (Meridian)</div>
+  </div>
+
+  <!-- TRASH — bottom right -->
+  <div class="desk-icon" id="icon-trash" style="right:60px;bottom:40px;" data-drag="true">
+    <div class="icon-img">🗑️</div>
+    <div class="icon-label">Trash</div>
+  </div>
+
+  <!-- HERO TEXT -->
+  <div style="
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-52%);
+    text-align:center;
+    pointer-events:none;
+    z-index:2;
+  ">
+    <p style="font-size:16px;color:var(--muted);font-weight:300;letter-spacing:0.01em;margin-bottom:4px;">welcome to my</p>
+    <p style="
+      font-family:'Instrument Serif',serif;
+      font-style:italic;
+      font-size:clamp(72px,10vw,128px);
+      line-height:0.95;
+      color:var(--text);
+      letter-spacing:-0.02em;
+    ">portfolio.</p>
+  </div>
+
+</div><!-- /desktop -->
+
+<!-- WINDOWS LAYER -->
+<div class="win-overlay" id="winOverlay"></div>
+
+<!-- DOCK -->
+<nav class="dock-wrap" aria-label="Navigation dock">
+  <div class="dock">
+    <!-- Finder (decorative) -->
+    <div class="dock-item" onclick="openWindow('finder')">
+      <div class="dock-icon-img di-finder">🔍</div>
+      <div class="dock-tip">Finder</div>
+      <div class="dock-dot"></div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <!-- About -->
+    <div class="dock-item" id="dockbtn-about" onclick="openWindow('about')">
+      <div class="dock-icon-img di-about">👤</div>
+      <div class="dock-tip">About Me</div>
+      <div class="dock-dot"></div>
+    </div>
+    <!-- Projects -->
+    <div class="dock-item" id="dockbtn-projects" onclick="openWindow('projects')">
+      <div class="dock-icon-img di-projects">📂</div>
+      <div class="dock-tip">Projects</div>
+      <div class="dock-dot"></div>
+    </div>
+    <!-- Archive -->
+    <div class="dock-item" id="dockbtn-archive" onclick="openWindow('archive')">
+      <div class="dock-icon-img di-archive">🗃️</div>
+      <div class="dock-tip">Archive</div>
+      <div class="dock-dot"></div>
+    </div>
+    <!-- Resources -->
+    <div class="dock-item" id="dockbtn-resources" onclick="openWindow('resources')">
+      <div class="dock-icon-img di-resources">📚</div>
+      <div class="dock-tip">Resources</div>
+      <div class="dock-dot"></div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <!-- Mail -->
+    <div class="dock-item" id="dockbtn-contact" onclick="openWindow('contact')">
+      <div class="dock-icon-img di-mail">✉️</div>
+      <div class="dock-tip">Contact</div>
+      <div class="dock-dot"></div>
+    </div>
+    <!-- Trash -->
+    <div class="dock-item">
+      <div class="dock-icon-img di-trash">🗑️</div>
+      <div class="dock-tip">Trash</div>
+      <div class="dock-dot"></div>
+    </div>
+  </div>
+</nav>
+
+<script>
+/* ═══════════════════════════════════════
+   CLOCK
+═══════════════════════════════════════ */
+function updateClock(){
+  const now=new Date();
+  const d=now.toLocaleDateString('en-GB',{weekday:'short',month:'short',day:'numeric'});
+  const t=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('clock').textContent=d+' '+t;
+}
+updateClock();setInterval(updateClock,15000);
+
+/* ═══════════════════════════════════════
+   DRAGGING — icons & sticky note
+═══════════════════════════════════════ */
+let dragEl=null,dragOffX=0,dragOffY=0;
+
+function startDrag(e,el){
+  // Convert right/bottom-positioned elements to left/top-positioned
+  if(el.style.right || el.style.bottom){
+    const desktop=document.getElementById('desktop');
+    const dr=desktop.getBoundingClientRect();
+    const rect=el.getBoundingClientRect();
+    el.style.left=(rect.left-dr.left)+'px';
+    el.style.top=(rect.top-dr.top)+'px';
+    el.style.right='';
+    el.style.bottom='';
+  }
+  dragEl=el;
+  el.classList.add('dragging');
+  const rect=el.getBoundingClientRect();
+  dragOffX=e.clientX-rect.left;
+  dragOffY=e.clientY-rect.top;
+  document.addEventListener('mousemove',onDrag);
+  document.addEventListener('mouseup',stopDrag);
+  e.preventDefault();
+}
+
+function onDrag(e){
+  if(!dragEl)return;
+  const desktop=document.getElementById('desktop');
+  const dr=desktop.getBoundingClientRect();
+  let x=e.clientX-dr.left-dragOffX;
+  let y=e.clientY-dr.top-dragOffY;
+  x=Math.max(0,Math.min(x,dr.width-dragEl.offsetWidth));
+  y=Math.max(0,Math.min(y,dr.height-dragEl.offsetHeight));
+  dragEl.style.left=x+'px';
+  dragEl.style.top=y+'px';
+}
+
+function stopDrag(){
+  if(dragEl){dragEl.classList.remove('dragging');dragEl=null;}
+  document.removeEventListener('mousemove',onDrag);
+  document.removeEventListener('mouseup',stopDrag);
+}
+
+// Attach drag to desktop icons & sticky
+document.querySelectorAll('[data-drag="true"]').forEach(el=>{
+  el.addEventListener('mousedown',e=>{
+    if(e.button!==0)return;
+    // Delay to distinguish click vs drag
+    let moved=false;
+    const onM=()=>{moved=true;startDrag(e,el);document.removeEventListener('mousemove',onM);};
+    document.addEventListener('mousemove',onM);
+    document.addEventListener('mouseup',()=>{document.removeEventListener('mousemove',onM);},{once:true});
+  });
+});
+
+/* ═══════════════════════════════════════
+   WINDOW SYSTEM
+═══════════════════════════════════════ */
+const overlay=document.getElementById('winOverlay');
+let zTop=600;
+let openWindows={};
+
+const winConfigs={
+  about:{
+    title:'About Me',
+    width:640,height:480,
+    finder:true,
+    sidebarItems:[
+      {icon:'👤',label:'About',active:true,render:()=>`
+        <div class="win-page">
+          <h1>Zara Khan</h1>
+          <div class="tag-row">
+            <span class="win-tag">Graphic Designer</span>
+            <span class="win-tag">Brand Identity</span>
+            <span class="win-tag">Editorial</span>
+          </div>
+          <p>I'm a graphic designer with a soft spot for typography and a firm belief that good design starts with genuine curiosity about the people it's for.</p>
+          <p>I work across brand identity, editorial, and packaging — often for studios and small businesses that care deeply about craft and want their visual presence to reflect that.</p>
+        </div>`},
+      {icon:'🛠️',label:'Skills',render:()=>`
+        <div class="win-page">
+          <h1>Skills & Tools</h1>
+          <h2>Design</h2>
+          <div class="skill-grid">
+            <span class="skill-chip">Adobe Illustrator</span>
+            <span class="skill-chip">InDesign</span>
+            <span class="skill-chip">Photoshop</span>
+            <span class="skill-chip">Figma</span>
+            <span class="skill-chip">Procreate</span>
+          </div>
+          <h2>Disciplines</h2>
+          <div class="skill-grid">
+            <span class="skill-chip">Brand Identity</span>
+            <span class="skill-chip">Typography</span>
+            <span class="skill-chip">Packaging</span>
+            <span class="skill-chip">Art Direction</span>
+            <span class="skill-chip">Editorial Design</span>
+            <span class="skill-chip">Visual Systems</span>
+          </div>
+        </div>`},
+      {icon:'📍',label:'Location',render:()=>`
+        <div class="win-page">
+          <h1>Location</h1>
+          <p>Based in <strong>London, UK</strong> — available for remote projects worldwide.</p>
+          <p>Open to freelance projects and full-time roles.</p>
+          <div class="contact-row" style="margin-top:16px;">
+            <a class="contact-link" href="mailto:hello@zarakhan.com">✉️ hello@zarakhan.com</a>
+            <a class="contact-link" href="#">🔗 LinkedIn ↗</a>
+            <a class="contact-link" href="#">📷 Instagram ↗</a>
+          </div>
+        </div>`}
+    ]
+  },
+  resume:{
+    title:'Resume.pdf',
+    width:580,height:520,
+    render:()=>`
+      <div class="win-page">
+        <h1>Zara Khan</h1>
+        <p style="margin-bottom:0;"><a class="contact-link" href="mailto:hello@zarakhan.com">hello@zarakhan.com</a></p>
+        <h2>Experience</h2>
+        <p><strong>Freelance Graphic Designer</strong> — 2022–present<br>Brand identity, packaging, and editorial design for studios across Europe.</p>
+        <p><strong>Junior Designer, Atelier Nord</strong> — 2020–2022<br>Visual systems, print production, and brand rollouts for mid-size clients.</p>
+        <h2>Education</h2>
+        <p><strong>BA Graphic Communication</strong> — University of Arts London, 2020</p>
+        <h2>Skills</h2>
+        <div class="skill-grid">
+          <span class="skill-chip">Adobe CC</span>
+          <span class="skill-chip">Figma</span>
+          <span class="skill-chip">Brand Identity</span>
+          <span class="skill-chip">Editorial</span>
+          <span class="skill-chip">Packaging</span>
+          <span class="skill-chip">Typography</span>
+        </div>
+        <div style="margin-top:20px;">
+          <a class="contact-link" href="https://drive.google.com/your-resume-link" target="_blank">⬇ Download PDF ↗</a>
+        </div>
+      </div>`
+  },
+  projects:{
+    title:'Projects',
+    width:660,height:460,
+    finder:true,
+    sidebarItems:[
+      {icon:'📁',label:'All Projects',active:true,render:()=>`
+        <div class="file-grid">
+          <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
+          <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
+          <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+        </div>`},
+      {icon:'🏷️',label:'Branding',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
+        </div>`},
+      {icon:'📦',label:'Packaging',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
+        </div>`},
+      {icon:'📰',label:'Editorial',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+        </div>`}
+    ]
+  },
+  p1:{
+    title:'Project 01 — Verdant Studio',
+    width:680,height:500,
+    finder:true,
+    sidebarItems:[
+      {icon:'🖼️',label:'Overview',active:true,render:()=>`
+        <div class="win-page">
+          <h1>Verdant Studio</h1>
+          <div class="tag-row"><span class="win-tag">Brand Identity</span><span class="win-tag">2024</span></div>
+          <p>Full brand identity for a sustainable design consultancy — logomark, colour system, typography, and stationery suite.</p>
+        </div>`},
+      {icon:'📸',label:'Images',render:()=>`
+        <div class="win-page">
+          <h2>Images</h2>
+          <div class="file-grid">
+            <div class="file-item"><div class="file-item-icon">🖼️</div><div class="file-item-name">Logo Files</div></div>
+            <div class="file-item"><div class="file-item-icon">🎨</div><div class="file-item-name">Colour System</div></div>
+            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
+          </div>
+          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
+        </div>`},
+      {icon:'📝',label:'Brief',render:()=>`
+        <div class="win-page">
+          <h2>Project Brief</h2>
+          <p><strong>Client:</strong> Verdant Studio</p>
+          <p><strong>Year:</strong> 2024</p>
+          <p><strong>Scope:</strong> Full brand identity system — logomark, colour palette, typography, stationery, and brand guidelines.</p>
+          <p><strong>Deliverables:</strong> Logo files (AI, SVG, PNG), brand style guide PDF, stationery mockups.</p>
+          <div class="file-grid" style="margin-top:12px;">
+            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
+          </div>
+        </div>`}
+    ]
+  },
+  p2:{
+    title:'Project 02 — Ōra Ceramics',
+    width:680,height:500,
+    finder:true,
+    sidebarItems:[
+      {icon:'🖼️',label:'Overview',active:true,render:()=>`
+        <div class="win-page">
+          <h1>Ōra Ceramics</h1>
+          <div class="tag-row"><span class="win-tag">Packaging Design</span><span class="win-tag">2024</span></div>
+          <p>Packaging design and brand language for a Lisbon-based artisan ceramics label, sold across Europe.</p>
+        </div>`},
+      {icon:'📸',label:'Images',render:()=>`
+        <div class="win-page">
+          <h2>Images</h2>
+          <div class="file-grid">
+            <div class="file-item"><div class="file-item-icon">📦</div><div class="file-item-name">Packaging</div></div>
+            <div class="file-item"><div class="file-item-icon">🎨</div><div class="file-item-name">Palette</div></div>
+            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
+          </div>
+          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
+        </div>`},
+      {icon:'📝',label:'Brief',render:()=>`
+        <div class="win-page">
+          <h2>Project Brief</h2>
+          <p><strong>Client:</strong> Ōra Ceramics, Lisbon</p>
+          <p><strong>Year:</strong> 2024</p>
+          <p><strong>Scope:</strong> Packaging design and brand language for an artisan ceramics studio distributing across Europe.</p>
+          <p><strong>Deliverables:</strong> Packaging artwork, label design, brand colour palette, and print-ready files.</p>
+          <div class="file-grid" style="margin-top:12px;">
+            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
+          </div>
+        </div>`}
+    ]
+  },
+  p3:{
+    title:'Project 03 — Meridian Annual Report',
+    width:680,height:500,
+    finder:true,
+    sidebarItems:[
+      {icon:'🖼️',label:'Overview',active:true,render:()=>`
+        <div class="win-page">
+          <h1>Meridian Annual Report</h1>
+          <div class="tag-row"><span class="win-tag">Editorial Design</span><span class="win-tag">2023</span></div>
+          <p>100-page editorial design for Meridian Architecture — art direction, typographic system, data visualisation, and infographics.</p>
+        </div>`},
+      {icon:'📸',label:'Images',render:()=>`
+        <div class="win-page">
+          <h2>Images</h2>
+          <div class="file-grid">
+            <div class="file-item"><div class="file-item-icon">📰</div><div class="file-item-name">Spreads</div></div>
+            <div class="file-item"><div class="file-item-icon">📊</div><div class="file-item-name">Infographics</div></div>
+            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
+          </div>
+          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
+        </div>`},
+      {icon:'📝',label:'Brief',render:()=>`
+        <div class="win-page">
+          <h2>Project Brief</h2>
+          <p><strong>Client:</strong> Meridian Architecture</p>
+          <p><strong>Year:</strong> 2023</p>
+          <p><strong>Scope:</strong> 100-page annual report — art direction, typographic system, infographic design, and print production.</p>
+          <p><strong>Deliverables:</strong> Print-ready InDesign files, PDF export, infographic assets.</p>
+          <div class="file-grid" style="margin-top:12px;">
+            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
+          </div>
+        </div>`}
+    ]
+  },
+  archive:{
+    title:'Archive — Photos & Process',
+    width:620,height:480,
+    finder:true,
+    sidebarItems:[
+      {icon:'🗃️',label:'All',active:true,render:()=>`
+        <div class="archive-grid">
+          ${[1,2,3,4,5,6].map(i=>`<div class="archive-cell"><span>Image ${i}</span></div>`).join('')}
+        </div>
+        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Replace placeholders with your images</p>`},
+      {icon:'📷',label:'Photos',render:()=>`
+        <div class="archive-grid">
+          ${[1,2,3].map(i=>`<div class="archive-cell"><span>Photo ${i}</span></div>`).join('')}
+        </div>
+        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your photography here</p>`},
+      {icon:'✏️',label:'Sketches',render:()=>`
+        <div class="archive-grid">
+          ${[1,2,3].map(i=>`<div class="archive-cell"><span>Sketch ${i}</span></div>`).join('')}
+        </div>
+        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add process sketches here</p>`}
+    ]
+  },
+  resources:{
+    title:'Resources',
+    width:580,height:460,
+    finder:true,
+    sidebarItems:[
+      {icon:'📚',label:'All',active:true,render:()=>`
+        <div style="padding:4px 0;">
+          <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;">Typography</p>
+          <div class="resource-list">
+            <div class="resource-row"><span class="resource-row-icon">Gg</span><div class="resource-row-text"><p class="rname">Google Fonts</p><p class="rdesc">Free open-source typefaces</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Ar</span><div class="resource-row-text"><p class="rname">Are.na</p><p class="rdesc">Visual research &amp; moodboarding</p></div></div>
+          </div>
+          <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin:14px 0 8px;">Design Tools</p>
+          <div class="resource-list">
+            <div class="resource-row"><span class="resource-row-icon">Fi</span><div class="resource-row-text"><p class="rname">Figma</p><p class="rdesc">Interface design &amp; prototyping</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Cl</span><div class="resource-row-text"><p class="rname">Coolors</p><p class="rdesc">Fast colour palette generator</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Be</span><div class="resource-row-text"><p class="rname">Behance</p><p class="rdesc">Portfolio inspiration</p></div></div>
+          </div>
+        </div>`},
+      {icon:'🔤',label:'Typography',render:()=>`
+        <div style="padding:4px 0;">
+          <div class="resource-list">
+            <div class="resource-row"><span class="resource-row-icon">Gg</span><div class="resource-row-text"><p class="rname">Google Fonts</p><p class="rdesc">Free open-source typefaces</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Ar</span><div class="resource-row-text"><p class="rname">Are.na</p><p class="rdesc">Visual research &amp; moodboarding</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Ty</span><div class="resource-row-text"><p class="rname">Typewolf</p><p class="rdesc">Font pairing inspiration</p></div></div>
+          </div>
+        </div>`},
+      {icon:'🎨',label:'Design Tools',render:()=>`
+        <div style="padding:4px 0;">
+          <div class="resource-list">
+            <div class="resource-row"><span class="resource-row-icon">Fi</span><div class="resource-row-text"><p class="rname">Figma</p><p class="rdesc">Interface design &amp; prototyping</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Cl</span><div class="resource-row-text"><p class="rname">Coolors</p><p class="rdesc">Fast colour palette generator</p></div></div>
+            <div class="resource-row"><span class="resource-row-icon">Be</span><div class="resource-row-text"><p class="rname">Behance</p><p class="rdesc">Portfolio inspiration</p></div></div>
+          </div>
+        </div>`}
+    ]
+  },
+  contact:{
+    title:'Contact — Zara Khan',
+    width:520,height:420,
+    render:()=>`
+      <div class="win-page">
+        <h1>Say hello</h1>
+        <p>Open to freelance projects and full-time roles. Let's talk.</p>
+        <div class="contact-row" style="margin-bottom:20px;">
+          <a class="contact-link" href="mailto:hello@zarakhan.com">✉️ hello@zarakhan.com</a>
+          <a class="contact-link" href="#">🔗 LinkedIn ↗</a>
+          <a class="contact-link" href="#">📷 Instagram ↗</a>
+        </div>
+        <form class="win-form" onsubmit="handleForm(event)">
+          <div><label class="form-label">Your name</label><input class="form-input" type="text" placeholder="Alex Rivera" required></div>
+          <div><label class="form-label">Email</label><input class="form-input" type="email" placeholder="alex@studio.com" required></div>
+          <div><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell me about your project…" required></textarea></div>
+          <button class="form-btn" type="submit">Send message</button>
+        </form>
+      </div>`
+  },
+  finder:{
+    title:'Finder',
+    width:660,height:440,
+    finder:true,
+    sidebarItems:[{icon:'🏠',label:'Home',active:true},{icon:'📁',label:'Projects'},{icon:'🗃️',label:'Archive'},{icon:'📚',label:'Resources'}],
+    render:()=>`
+      <div class="file-grid">
+        <div class="file-item" ondblclick="openWindow('about')"><div class="file-item-icon">📁</div><div class="file-item-name">About Me</div></div>
+        <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01</div></div>
+        <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02</div></div>
+        <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03</div></div>
+        <div class="file-item" ondblclick="openWindow('archive')"><div class="file-item-icon">🗃️</div><div class="file-item-name">Archive</div></div>
+        <div class="file-item" ondblclick="openWindow('resources')"><div class="file-item-icon">📚</div><div class="file-item-name">Resources</div></div>
+        <div class="file-item" ondblclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
+        <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
+      </div>`
+  }
+};
+
+function openWindow(id){
+  if(openWindows[id]){
+    focusWindow(openWindows[id]);
+    return;
+  }
+  const cfg=winConfigs[id];
+  if(!cfg)return;
+
+  overlay.classList.add('has-windows');
+  zTop+=2;
+
+  const w=document.createElement('div');
+  w.className='window focused';
+  w.style.cssText=`
+    width:${cfg.width}px;
+    height:${cfg.height}px;
+    top:${80+Math.random()*80}px;
+    left:${120+Math.random()*120}px;
+    z-index:${zTop};
+  `;
+
+  // Build finder layout vs simple
+  if(cfg.finder){
+    // Determine active tab key (first item by default)
+    const firstTab = cfg.sidebarItems[0].tab || cfg.sidebarItems[0].label;
+
+    const sidebar = cfg.sidebarItems.map(s => {
+      const tabKey = s.tab || s.label;
+      return `<div class="sidebar-item${s.active ? ' active' : ''}" data-winid="${id}" data-tab="${tabKey}" onclick="switchTab(this)">
+        <span class="sidebar-icon">${s.icon}</span>${s.label}
+      </div>`;
+    }).join('');
+
+    // Build all tab panels; only the first is visible
+    const panels = cfg.sidebarItems.map((s, i) => {
+      const tabKey = s.tab || s.label;
+      return `<div class="win-tab-panel" data-panel="${tabKey}" style="display:${i===0?'block':'none'};height:100%;">${s.render ? s.render() : cfg.render()}</div>`;
+    }).join('');
+
+    w.innerHTML = `
+      <div class="win-chrome" data-winchrome="${id}">
+        <div class="win-btn win-btn-close" onclick="closeWindow('${id}',event)" title="Close"></div>
+        <div class="win-btn win-btn-min" title="Minimise"></div>
+        <div class="win-btn win-btn-max" title="Maximise"></div>
+        <span class="win-title">${cfg.title}</span>
+      </div>
+      <div class="win-finder">
+        <div class="win-sidebar">
+          <div class="sidebar-section">Favourites</div>
+          ${sidebar}
+        </div>
+        <div class="win-content">${panels}</div>
+      </div>`;
+  } else {
+    w.innerHTML=`
+      <div class="win-chrome" data-winchrome="${id}">
+        <div class="win-btn win-btn-close" onclick="closeWindow('${id}',event)" title="Close"></div>
+        <div class="win-btn win-btn-min" title="Minimise"></div>
+        <div class="win-btn win-btn-max" title="Maximise"></div>
+        <span class="win-title">${cfg.title}</span>
+      </div>
+      <div class="win-body">${cfg.render()}</div>`;
+  }
+
+  overlay.appendChild(w);
+  openWindows[id]=w;
+
+  // Focus on click anywhere on window
+  w.addEventListener('mousedown',()=>focusWindow(w));
+
+  // Make window draggable by title bar
+  const chrome=w.querySelector('.win-chrome');
+  chrome.addEventListener('mousedown',e=>{
+    if(e.target.classList.contains('win-btn'))return;
+    const rect=w.getBoundingClientRect();
+    const ox=e.clientX-rect.left,oy=e.clientY-rect.top;
+    function onMove(e){
+      let x=e.clientX-ox,y=e.clientY-oy;
+      x=Math.max(0,Math.min(x,window.innerWidth-w.offsetWidth));
+      y=Math.max(28,Math.min(y,window.innerHeight-w.offsetHeight-80));
+      w.style.left=x+'px';w.style.top=y+'px';
+    }
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',()=>document.removeEventListener('mousemove',onMove),{once:true});
+    e.preventDefault();
+  });
+
+  // Update dock dot
+  const dBtn=document.getElementById('dockbtn-'+id);
+  if(dBtn)dBtn.classList.add('open');
+}
+
+function focusWindow(w){
+  zTop+=2;w.style.zIndex=zTop;
+}
+
+function switchTab(sidebarEl){
+  const winId = sidebarEl.dataset.winid;
+  const tabKey = sidebarEl.dataset.tab;
+  const w = openWindows[winId];
+  if(!w) return;
+  // Update sidebar active state
+  w.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  sidebarEl.classList.add('active');
+  // Show correct panel
+  w.querySelectorAll('.win-tab-panel').forEach(panel => {
+    panel.style.display = panel.dataset.panel === tabKey ? 'block' : 'none';
+  });
+}
+
+function closeWindow(id,e){
+  if(e)e.stopPropagation();
+  const w=openWindows[id];
+  if(!w)return;
+  w.classList.add('closing');
+  setTimeout(()=>{
+    w.remove();
+    delete openWindows[id];
+    if(Object.keys(openWindows).length===0)overlay.classList.remove('has-windows');
+    const dBtn=document.getElementById('dockbtn-'+id);
+    if(dBtn)dBtn.classList.remove('open');
+  },160);
+}
+
+function handleForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.form-btn');
+  btn.textContent='Sent ✓';btn.style.background='#4a8a5c';
+  setTimeout(()=>{btn.textContent='Send message';btn.style.background='';e.target.reset();},3000);
+}
+</script>
+</body>
+</html>
