@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -43,10 +43,10 @@ body{
 /* ── GRID BACKGROUND ── */
 .desktop-grid{
   position:fixed;inset:0;
-  background-image:
-    linear-gradient(var(--grid) 1px,transparent 1px),
-    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:24px 24px;
+  background-image:url('background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
   pointer-events:none;
   z-index:0;
 }
@@ -216,6 +216,10 @@ body{
 }
 .win-body::-webkit-scrollbar{width:6px;}
 .win-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
+.win-body-flush{
+  flex:1;overflow:hidden;
+  display:flex;flex-direction:column;
+}
 
 /* Finder-style sidebar + content */
 .win-finder{display:flex;flex:1;overflow:hidden;}
@@ -254,6 +258,81 @@ body{
 .file-item:hover{background:rgba(0,0,0,0.06);}
 .file-item-icon{font-size:36px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));}
 .file-item-name{font-size:11px;color:var(--text);text-align:center;line-height:1.3;max-width:88px;}
+
+/* ── PROJECT WINDOW (folder-style file view) ── */
+.project-header{
+  padding:18px 24px 14px;
+  border-bottom:0.5px solid rgba(0,0,0,0.1);
+  flex-shrink:0;
+}
+.project-header h2{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.project-header p{font-size:12.5px;color:var(--muted);}
+.project-files{
+  display:flex;flex-wrap:wrap;gap:36px;
+  padding:32px 28px;
+  flex:1;overflow-y:auto;min-height:0;
+  align-content:flex-start;
+}
+.project-file{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  width:110px;cursor:pointer;
+}
+.project-file:hover{opacity:0.82;}
+.project-file-name{font-size:12.5px;color:var(--text);text-align:center;line-height:1.3;}
+
+.pf-folder{font-size:58px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));}
+
+.pf-video{
+  width:58px;height:58px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#4d4d4d,#161616 72%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 8px rgba(0,0,0,0.28);
+}
+.pf-video::after{
+  content:'';
+  border-top:9px solid transparent;
+  border-bottom:9px solid transparent;
+  border-left:14px solid #5fc9e8;
+  margin-left:4px;
+}
+
+.pf-txt{
+  width:46px;height:58px;background:#fdfdfc;
+  border-radius:2px 9px 2px 2px;
+  box-shadow:0 2px 7px rgba(0,0,0,0.16);
+  position:relative;display:flex;flex-direction:column;
+  padding:8px 6px;gap:4px;
+}
+.pf-txt span{display:block;height:2px;background:#dcd8d0;border-radius:1px;}
+.pf-txt span:nth-child(1){width:75%;}
+.pf-txt span:nth-child(2){width:95%;}
+.pf-txt span:nth-child(3){width:60%;}
+.pf-txt::after{
+  content:'';position:absolute;top:0;right:0;
+  border-width:0 9px 9px 0;border-style:solid;
+  border-color:transparent #e5e1d9 transparent transparent;
+}
+.pf-thumb{
+  position:absolute;bottom:5px;right:4px;
+  width:13px;height:13px;border-radius:2px;
+  background:linear-gradient(135deg,#e8895f,#c9503a);
+}
+
+/* Text-file viewer window */
+.txt-viewer{
+  padding:26px 30px;font-size:14px;line-height:1.75;
+  color:var(--text);white-space:pre-wrap;
+  overflow-y:auto;flex:1;min-height:0;
+}
+.photo-placeholder{
+  flex:1;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:linear-gradient(160deg,#e4e1db,#cfccc4);
+}
+.photo-placeholder-icon{font-size:64px;opacity:0.55;}
+.photo-placeholder-text{font-size:13px;color:var(--muted);font-weight:500;}
+.txt-viewer::-webkit-scrollbar{width:6px;}
+.txt-viewer::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:3px;}
 
 /* About / page content inside windows */
 .win-page{padding:28px 32px;}
@@ -387,6 +466,37 @@ body{
 /* z-index management for stacking */
 .window.focused{z-index:700;}
 
+/* ── HERO TEXT — letter-by-letter hover ── */
+.hero-text{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-52%);
+  text-align:center;
+  pointer-events:none;
+  z-index:2;
+}
+.hero-sub{
+  font-size:16px;color:var(--muted);font-weight:300;
+  letter-spacing:0.01em;margin-bottom:4px;
+}
+.hero-main{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:clamp(72px,10vw,128px);
+  line-height:0.95;
+  color:var(--text);
+  letter-spacing:-0.02em;
+}
+.letter{
+  display:inline-block;
+  transition:
+    transform 0.16s cubic-bezier(0.22,1,0.36,1),
+    color 0.18s ease,
+    text-shadow 0.18s ease;
+  transform-origin:center bottom;
+  will-change:transform;
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
 }
@@ -433,27 +543,27 @@ body{
   </div>
 
   <!-- RESUME FILE — top right -->
-  <div class="desk-icon" id="icon-resume" style="right:160px;top:68px;" data-drag="true" ondblclick="openWindow('resume')">
+  <div class="desk-icon" id="icon-resume" style="right:160px;top:68px;" data-drag="true" data-open="resume">
     <div class="icon-img">📄</div>
     <div class="icon-label">Resume.pdf</div>
   </div>
 
   <!-- ABOUT ME FOLDER — top right -->
-  <div class="desk-icon" id="icon-about" style="right:70px;top:68px;" data-drag="true" ondblclick="openWindow('about')">
+  <div class="desk-icon" id="icon-about" style="right:70px;top:68px;" data-drag="true" data-open="about-photo,about">
     <div class="icon-img">📁</div>
     <div class="icon-label">About Me</div>
   </div>
 
   <!-- PROJECT FOLDERS — bottom left -->
-  <div class="desk-icon" id="icon-p1" style="left:60px;bottom:180px;" data-drag="true" ondblclick="openWindow('p1')">
+  <div class="desk-icon" id="icon-p1" style="left:60px;bottom:180px;" data-drag="true" data-open="p1">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 01 (Verdant Studio)</div>
   </div>
-  <div class="desk-icon" id="icon-p2" style="left:60px;bottom:100px;" data-drag="true" ondblclick="openWindow('p2')">
+  <div class="desk-icon" id="icon-p2" style="left:60px;bottom:100px;" data-drag="true" data-open="p2">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 02 (Ōra Ceramics)</div>
   </div>
-  <div class="desk-icon" id="icon-p3" style="left:60px;bottom:20px;" data-drag="true" ondblclick="openWindow('p3')">
+  <div class="desk-icon" id="icon-p3" style="left:60px;bottom:20px;" data-drag="true" data-open="p3">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 03 (Meridian)</div>
   </div>
@@ -465,23 +575,9 @@ body{
   </div>
 
   <!-- HERO TEXT -->
-  <div style="
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-52%);
-    text-align:center;
-    pointer-events:none;
-    z-index:2;
-  ">
-    <p style="font-size:16px;color:var(--muted);font-weight:300;letter-spacing:0.01em;margin-bottom:4px;">welcome to my</p>
-    <p style="
-      font-family:'Instrument Serif',serif;
-      font-style:italic;
-      font-size:clamp(72px,10vw,128px);
-      line-height:0.95;
-      color:var(--text);
-      letter-spacing:-0.02em;
-    ">portfolio.</p>
+  <div class="hero-text" id="heroText">
+    <p class="hero-sub" data-split>welcome to my</p>
+    <p class="hero-main" data-split>portfolio.</p>
   </div>
 
 </div><!-- /desktop -->
@@ -502,7 +598,7 @@ body{
     <div class="dock-divider"></div>
 
     <!-- About -->
-    <div class="dock-item" id="dockbtn-about" onclick="openWindow('about')">
+    <div class="dock-item" id="dockbtn-about" onclick="openWindow('about-photo');openWindow('about')">
       <div class="dock-icon-img di-about">👤</div>
       <div class="dock-tip">About Me</div>
       <div class="dock-dot"></div>
@@ -545,6 +641,93 @@ body{
 
 <script>
 /* ═══════════════════════════════════════
+   HERO TEXT — split into hoverable letters
+═══════════════════════════════════════ */
+function splitIntoLetters(el){
+  const text=el.textContent;
+  el.innerHTML='';
+  for(const ch of text){
+    if(ch===' '){
+      el.appendChild(document.createTextNode(' '));
+    }else{
+      const span=document.createElement('span');
+      span.className='letter';
+      span.textContent=ch;
+      el.appendChild(span);
+    }
+  }
+}
+document.querySelectorAll('[data-split]').forEach(splitIntoLetters);
+
+/* ═══════════════════════════════════════
+   HERO TEXT — cursor-radius magnetic effect
+   Letters smoothly scale up based on how
+   close the cursor is, with falloff — not
+   a discrete per-letter hover state.
+═══════════════════════════════════════ */
+(function(){
+  const heroSubLetters=document.querySelectorAll('.hero-sub .letter');
+  const heroMainLetters=document.querySelectorAll('.hero-main .letter');
+  if(heroSubLetters.length===0 && heroMainLetters.length===0)return;
+
+  // Tuning per text size — bigger text gets a bigger radius & gentler scale
+  const CONFIG_SUB ={radius:90, maxScale:1.6, maxLift:-6,  boldAt:0.55};
+  const CONFIG_MAIN={radius:170,maxScale:1.28,maxLift:-16, boldAt:0.5};
+
+  let mouseX=-9999,mouseY=-9999;
+  let rafPending=false;
+
+  function smoothstep(t){ return t*t*(3-2*t); }
+
+  function applyEffect(span,cfg){
+    const rect=span.getBoundingClientRect();
+    const cx=rect.left+rect.width/2;
+    const cy=rect.top+rect.height/2;
+    const dx=mouseX-cx, dy=mouseY-cy;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+
+    if(dist<cfg.radius){
+      const t=smoothstep(1-dist/cfg.radius);
+      const scale=1+(cfg.maxScale-1)*t;
+      const lift=cfg.maxLift*t;
+      span.style.transform=`translateY(${lift.toFixed(2)}px) scale(${scale.toFixed(3)})`;
+      if(t>cfg.boldAt){
+        span.style.color='var(--accent)';
+      }else{
+        span.style.color='';
+      }
+    }else{
+      span.style.transform='';
+      span.style.color='';
+    }
+  }
+
+  function updateAll(){
+    rafPending=false;
+    heroSubLetters.forEach(s=>applyEffect(s,CONFIG_SUB));
+    heroMainLetters.forEach(s=>applyEffect(s,CONFIG_MAIN));
+  }
+
+  function requestUpdate(){
+    if(!rafPending){
+      rafPending=true;
+      requestAnimationFrame(updateAll);
+    }
+  }
+
+  window.addEventListener('mousemove',e=>{
+    mouseX=e.clientX;
+    mouseY=e.clientY;
+    requestUpdate();
+  });
+
+  window.addEventListener('mouseleave',()=>{
+    mouseX=-9999;mouseY=-9999;
+    requestUpdate();
+  });
+})();
+
+/* ═══════════════════════════════════════
    CLOCK
 ═══════════════════════════════════════ */
 function updateClock(){
@@ -556,11 +739,13 @@ function updateClock(){
 updateClock();setInterval(updateClock,15000);
 
 /* ═══════════════════════════════════════
-   DRAGGING — icons & sticky note
+   DRAGGING + SINGLE-CLICK ACTIVATION
+   — icons & sticky note
 ═══════════════════════════════════════ */
 let dragEl=null,dragOffX=0,dragOffY=0;
+const DRAG_THRESHOLD=5; // px of movement before it counts as a drag, not a click
 
-function startDrag(e,el){
+function beginDragFrom(startEvent,el){
   // Convert right/bottom-positioned elements to left/top-positioned
   if(el.style.right || el.style.bottom){
     const desktop=document.getElementById('desktop');
@@ -574,11 +759,8 @@ function startDrag(e,el){
   dragEl=el;
   el.classList.add('dragging');
   const rect=el.getBoundingClientRect();
-  dragOffX=e.clientX-rect.left;
-  dragOffY=e.clientY-rect.top;
-  document.addEventListener('mousemove',onDrag);
-  document.addEventListener('mouseup',stopDrag);
-  e.preventDefault();
+  dragOffX=startEvent.clientX-rect.left;
+  dragOffY=startEvent.clientY-rect.top;
 }
 
 function onDrag(e){
@@ -593,21 +775,43 @@ function onDrag(e){
   dragEl.style.top=y+'px';
 }
 
-function stopDrag(){
+function endDrag(){
   if(dragEl){dragEl.classList.remove('dragging');dragEl=null;}
-  document.removeEventListener('mousemove',onDrag);
-  document.removeEventListener('mouseup',stopDrag);
 }
 
-// Attach drag to desktop icons & sticky
+// Attach drag + single-click-to-open to desktop icons & sticky note
 document.querySelectorAll('[data-drag="true"]').forEach(el=>{
   el.addEventListener('mousedown',e=>{
     if(e.button!==0)return;
-    // Delay to distinguish click vs drag
-    let moved=false;
-    const onM=()=>{moved=true;startDrag(e,el);document.removeEventListener('mousemove',onM);};
-    document.addEventListener('mousemove',onM);
-    document.addEventListener('mouseup',()=>{document.removeEventListener('mousemove',onM);},{once:true});
+    const startX=e.clientX,startY=e.clientY;
+    let isDragging=false;
+
+    function onMove(ev){
+      if(!isDragging){
+        const dx=ev.clientX-startX,dy=ev.clientY-startY;
+        if(Math.abs(dx)>DRAG_THRESHOLD||Math.abs(dy)>DRAG_THRESHOLD){
+          isDragging=true;
+          beginDragFrom(e,el);
+        }
+      }
+      if(isDragging)onDrag(ev);
+    }
+    function onUp(){
+      document.removeEventListener('mousemove',onMove);
+      document.removeEventListener('mouseup',onUp);
+      if(isDragging){
+        endDrag();
+      }else{
+        // It was a click, not a drag — open whatever this icon points to
+        const openIds=el.dataset.open;
+        if(openIds){
+          openIds.split(',').forEach(id=>openWindow(id.trim()));
+        }
+      }
+    }
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onUp);
+    e.preventDefault();
   });
 });
 
@@ -618,56 +822,99 @@ const overlay=document.getElementById('winOverlay');
 let zTop=600;
 let openWindows={};
 
+/* ═══════════════════════════════════════
+   PROJECT DATA — edit this to update your
+   project folders' content and links
+═══════════════════════════════════════ */
+const PROJECTS={
+  p1:{
+    title:'Verdant Studio (Project 01)',
+    subtitle:'Brand Identity Design',
+    figmaUrl:'https://www.figma.com/your-verdant-case-study-link',
+    videoUrl:'https://your-video-host.com/verdantstudio.mov',
+    videoLabel:'verdantstudio.mov',
+    tldr:`Full brand identity for a sustainable design consultancy — logomark, colour system, typography, and stationery suite.
+
+This project involved deep collaborative work with the founders to translate their sustainability-first values into a visual language: an earthy, restrained palette, a modular logomark that adapts across formats, and a full stationery and print system.
+
+Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+  },
+  p2:{
+    title:'Ōra Ceramics (Project 02)',
+    subtitle:'Packaging & Brand Identity',
+    figmaUrl:'https://www.figma.com/your-ora-case-study-link',
+    videoUrl:'https://your-video-host.com/oraceramics.mov',
+    videoLabel:'oraceramics.mov',
+    tldr:`Packaging design and brand language for a Lisbon-based artisan ceramics label, sold across Europe.
+
+The brief called for packaging that felt handmade and premium without losing shelf presence — resulting in a warm, tactile system built around unbleached kraft stock, a custom wordmark, and a considered colour system pulled from the clay itself.
+
+Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+  },
+  p3:{
+    title:'Meridian Annual Report (Project 03)',
+    subtitle:'Editorial Design',
+    figmaUrl:'https://www.figma.com/your-meridian-case-study-link',
+    videoUrl:'https://your-video-host.com/meridian.mov',
+    videoLabel:'meridian.mov',
+    tldr:`100-page editorial design for Meridian Architecture — art direction, typographic system, data visualisation, and infographics.
+
+The report needed to balance dense financial and project data with a design language that felt confident and architectural. The result was a strict grid system, a custom infographic language, and a typographic hierarchy built to guide readers through 100 pages without fatigue.
+
+Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+  }
+};
+
+function openExternal(url){
+  window.open(url,'_blank','noopener');
+}
+
+function renderProjectFiles(id){
+  const p=PROJECTS[id];
+  return `
+    <div class="project-header">
+      <h2>${p.title}</h2>
+      <p>${p.subtitle}</p>
+    </div>
+    <div class="project-files">
+      <div class="project-file" onclick="openExternal('${p.figmaUrl}')" title="Opens Figma in a new tab">
+        <div class="pf-folder">📁</div>
+        <div class="project-file-name">Full case study.fig</div>
+      </div>
+      <div class="project-file" onclick="openWindow('txt-${id}')" title="Opens project summary">
+        <div class="pf-txt"><span></span><span></span><span></span><div class="pf-thumb"></div></div>
+        <div class="project-file-name">TL;DR.txt</div>
+      </div>
+      <div class="project-file" onclick="openExternal('${p.videoUrl}')" title="Opens video in a new tab">
+        <div class="pf-video"></div>
+        <div class="project-file-name">${p.videoLabel}</div>
+      </div>
+    </div>`;
+}
+
+function renderTxtViewer(id){
+  const p=PROJECTS[id];
+  return `<div class="txt-viewer">${p.tldr}</div>`;
+}
+
 const winConfigs={
   about:{
-    title:'About Me',
-    width:640,height:480,
-    finder:true,
-    sidebarItems:[
-      {icon:'👤',label:'About',active:true,render:()=>`
-        <div class="win-page">
-          <h1>Zara Khan</h1>
-          <div class="tag-row">
-            <span class="win-tag">Graphic Designer</span>
-            <span class="win-tag">Brand Identity</span>
-            <span class="win-tag">Editorial</span>
-          </div>
-          <p>I'm a graphic designer with a soft spot for typography and a firm belief that good design starts with genuine curiosity about the people it's for.</p>
-          <p>I work across brand identity, editorial, and packaging — often for studios and small businesses that care deeply about craft and want their visual presence to reflect that.</p>
-        </div>`},
-      {icon:'🛠️',label:'Skills',render:()=>`
-        <div class="win-page">
-          <h1>Skills & Tools</h1>
-          <h2>Design</h2>
-          <div class="skill-grid">
-            <span class="skill-chip">Adobe Illustrator</span>
-            <span class="skill-chip">InDesign</span>
-            <span class="skill-chip">Photoshop</span>
-            <span class="skill-chip">Figma</span>
-            <span class="skill-chip">Procreate</span>
-          </div>
-          <h2>Disciplines</h2>
-          <div class="skill-grid">
-            <span class="skill-chip">Brand Identity</span>
-            <span class="skill-chip">Typography</span>
-            <span class="skill-chip">Packaging</span>
-            <span class="skill-chip">Art Direction</span>
-            <span class="skill-chip">Editorial Design</span>
-            <span class="skill-chip">Visual Systems</span>
-          </div>
-        </div>`},
-      {icon:'📍',label:'Location',render:()=>`
-        <div class="win-page">
-          <h1>Location</h1>
-          <p>Based in <strong>London, UK</strong> — available for remote projects worldwide.</p>
-          <p>Open to freelance projects and full-time roles.</p>
-          <div class="contact-row" style="margin-top:16px;">
-            <a class="contact-link" href="mailto:hello@zarakhan.com">✉️ hello@zarakhan.com</a>
-            <a class="contact-link" href="#">🔗 LinkedIn ↗</a>
-            <a class="contact-link" href="#">📷 Instagram ↗</a>
-          </div>
-        </div>`}
-    ]
+    title:'aboutme.txt',
+    width:480,height:440,
+    flush:true,
+    render:()=>`<div class="txt-viewer">Hi! I'm Zara, a graphic designer with a sharp eye for detail and a soft spot for bold, human-centred ideas. I craft brand identities and visual systems that simplify complexity — whether it's a logomark, a packaging system, or a hundred-page report.
+
+I work across brand identity, editorial, and packaging — often for studios and small businesses that care deeply about craft and want their visual presence to reflect that. Whether I'm building a typographic system or breaking the grid with something more experimental, my goal is always the same: make it work beautifully.</div>`
+  },
+  'about-photo':{
+    title:'IMG_0142.heic',
+    width:360,height:460,
+    flush:true,
+    render:()=>`
+      <div class="photo-placeholder">
+        <div class="photo-placeholder-icon">🧑‍🎨</div>
+        <div class="photo-placeholder-text">Add your photo here</div>
+      </div>`
   },
   resume:{
     title:'Resume.pdf',
@@ -702,125 +949,59 @@ const winConfigs={
     sidebarItems:[
       {icon:'📁',label:'All Projects',active:true,render:()=>`
         <div class="file-grid">
-          <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
-          <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
-          <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
         </div>`},
       {icon:'🏷️',label:'Branding',render:()=>`
         <div class="file-grid">
-          <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
         </div>`},
       {icon:'📦',label:'Packaging',render:()=>`
         <div class="file-grid">
-          <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
         </div>`},
       {icon:'📰',label:'Editorial',render:()=>`
         <div class="file-grid">
-          <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
         </div>`}
     ]
   },
   p1:{
-    title:'Project 01 — Verdant Studio',
-    width:680,height:500,
-    finder:true,
-    sidebarItems:[
-      {icon:'🖼️',label:'Overview',active:true,render:()=>`
-        <div class="win-page">
-          <h1>Verdant Studio</h1>
-          <div class="tag-row"><span class="win-tag">Brand Identity</span><span class="win-tag">2024</span></div>
-          <p>Full brand identity for a sustainable design consultancy — logomark, colour system, typography, and stationery suite.</p>
-        </div>`},
-      {icon:'📸',label:'Images',render:()=>`
-        <div class="win-page">
-          <h2>Images</h2>
-          <div class="file-grid">
-            <div class="file-item"><div class="file-item-icon">🖼️</div><div class="file-item-name">Logo Files</div></div>
-            <div class="file-item"><div class="file-item-icon">🎨</div><div class="file-item-name">Colour System</div></div>
-            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
-          </div>
-          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
-        </div>`},
-      {icon:'📝',label:'Brief',render:()=>`
-        <div class="win-page">
-          <h2>Project Brief</h2>
-          <p><strong>Client:</strong> Verdant Studio</p>
-          <p><strong>Year:</strong> 2024</p>
-          <p><strong>Scope:</strong> Full brand identity system — logomark, colour palette, typography, stationery, and brand guidelines.</p>
-          <p><strong>Deliverables:</strong> Logo files (AI, SVG, PNG), brand style guide PDF, stationery mockups.</p>
-          <div class="file-grid" style="margin-top:12px;">
-            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
-          </div>
-        </div>`}
-    ]
+    title:PROJECTS.p1.title,
+    width:620,height:400,
+    flush:true,
+    render:()=>renderProjectFiles('p1')
+  },
+  'txt-p1':{
+    title:'TL;DR.txt',
+    width:480,height:420,
+    flush:true,
+    render:()=>renderTxtViewer('p1')
   },
   p2:{
-    title:'Project 02 — Ōra Ceramics',
-    width:680,height:500,
-    finder:true,
-    sidebarItems:[
-      {icon:'🖼️',label:'Overview',active:true,render:()=>`
-        <div class="win-page">
-          <h1>Ōra Ceramics</h1>
-          <div class="tag-row"><span class="win-tag">Packaging Design</span><span class="win-tag">2024</span></div>
-          <p>Packaging design and brand language for a Lisbon-based artisan ceramics label, sold across Europe.</p>
-        </div>`},
-      {icon:'📸',label:'Images',render:()=>`
-        <div class="win-page">
-          <h2>Images</h2>
-          <div class="file-grid">
-            <div class="file-item"><div class="file-item-icon">📦</div><div class="file-item-name">Packaging</div></div>
-            <div class="file-item"><div class="file-item-icon">🎨</div><div class="file-item-name">Palette</div></div>
-            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
-          </div>
-          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
-        </div>`},
-      {icon:'📝',label:'Brief',render:()=>`
-        <div class="win-page">
-          <h2>Project Brief</h2>
-          <p><strong>Client:</strong> Ōra Ceramics, Lisbon</p>
-          <p><strong>Year:</strong> 2024</p>
-          <p><strong>Scope:</strong> Packaging design and brand language for an artisan ceramics studio distributing across Europe.</p>
-          <p><strong>Deliverables:</strong> Packaging artwork, label design, brand colour palette, and print-ready files.</p>
-          <div class="file-grid" style="margin-top:12px;">
-            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
-          </div>
-        </div>`}
-    ]
+    title:PROJECTS.p2.title,
+    width:620,height:400,
+    flush:true,
+    render:()=>renderProjectFiles('p2')
+  },
+  'txt-p2':{
+    title:'TL;DR.txt',
+    width:480,height:420,
+    flush:true,
+    render:()=>renderTxtViewer('p2')
   },
   p3:{
-    title:'Project 03 — Meridian Annual Report',
-    width:680,height:500,
-    finder:true,
-    sidebarItems:[
-      {icon:'🖼️',label:'Overview',active:true,render:()=>`
-        <div class="win-page">
-          <h1>Meridian Annual Report</h1>
-          <div class="tag-row"><span class="win-tag">Editorial Design</span><span class="win-tag">2023</span></div>
-          <p>100-page editorial design for Meridian Architecture — art direction, typographic system, data visualisation, and infographics.</p>
-        </div>`},
-      {icon:'📸',label:'Images',render:()=>`
-        <div class="win-page">
-          <h2>Images</h2>
-          <div class="file-grid">
-            <div class="file-item"><div class="file-item-icon">📰</div><div class="file-item-name">Spreads</div></div>
-            <div class="file-item"><div class="file-item-icon">📊</div><div class="file-item-name">Infographics</div></div>
-            <div class="file-item"><div class="file-item-icon">📸</div><div class="file-item-name">Mockups</div></div>
-          </div>
-          <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your image files here</p>
-        </div>`},
-      {icon:'📝',label:'Brief',render:()=>`
-        <div class="win-page">
-          <h2>Project Brief</h2>
-          <p><strong>Client:</strong> Meridian Architecture</p>
-          <p><strong>Year:</strong> 2023</p>
-          <p><strong>Scope:</strong> 100-page annual report — art direction, typographic system, infographic design, and print production.</p>
-          <p><strong>Deliverables:</strong> Print-ready InDesign files, PDF export, infographic assets.</p>
-          <div class="file-grid" style="margin-top:12px;">
-            <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Brief.pdf</div></div>
-          </div>
-        </div>`}
-    ]
+    title:PROJECTS.p3.title,
+    width:620,height:400,
+    flush:true,
+    render:()=>renderProjectFiles('p3')
+  },
+  'txt-p3':{
+    title:'TL;DR.txt',
+    width:480,height:420,
+    flush:true,
+    render:()=>renderTxtViewer('p3')
   },
   archive:{
     title:'Archive — Photos & Process',
@@ -908,13 +1089,13 @@ const winConfigs={
     sidebarItems:[{icon:'🏠',label:'Home',active:true},{icon:'📁',label:'Projects'},{icon:'🗃️',label:'Archive'},{icon:'📚',label:'Resources'}],
     render:()=>`
       <div class="file-grid">
-        <div class="file-item" ondblclick="openWindow('about')"><div class="file-item-icon">📁</div><div class="file-item-name">About Me</div></div>
-        <div class="file-item" ondblclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01</div></div>
-        <div class="file-item" ondblclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02</div></div>
-        <div class="file-item" ondblclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03</div></div>
-        <div class="file-item" ondblclick="openWindow('archive')"><div class="file-item-icon">🗃️</div><div class="file-item-name">Archive</div></div>
-        <div class="file-item" ondblclick="openWindow('resources')"><div class="file-item-icon">📚</div><div class="file-item-name">Resources</div></div>
-        <div class="file-item" ondblclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
+        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon">📁</div><div class="file-item-name">About Me</div></div>
+        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01</div></div>
+        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02</div></div>
+        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03</div></div>
+        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon">🗃️</div><div class="file-item-name">Archive</div></div>
+        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon">📚</div><div class="file-item-name">Resources</div></div>
+        <div class="file-item" onclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
         <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
       </div>`
   }
@@ -974,6 +1155,7 @@ function openWindow(id){
         <div class="win-content">${panels}</div>
       </div>`;
   } else {
+    const bodyClass = cfg.flush ? 'win-body-flush' : 'win-body';
     w.innerHTML=`
       <div class="win-chrome" data-winchrome="${id}">
         <div class="win-btn win-btn-close" onclick="closeWindow('${id}',event)" title="Close"></div>
@@ -981,7 +1163,7 @@ function openWindow(id){
         <div class="win-btn win-btn-max" title="Maximise"></div>
         <span class="win-title">${cfg.title}</span>
       </div>
-      <div class="win-body">${cfg.render()}</div>`;
+      <div class="${bodyClass}">${cfg.render()}</div>`;
   }
 
   overlay.appendChild(w);
