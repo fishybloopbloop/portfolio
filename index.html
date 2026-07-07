@@ -18,9 +18,9 @@
   --grid:#00000009;
   --menubar-bg:rgba(236,233,229,0.88);
   --dock-bg:rgba(255,255,255,0.48);
-  --text:#1a1a18;
-  --muted:#5a5a55;
-  --faint:#9a9a94;
+  --text:#141412;
+  --muted:#403f3a;
+  --faint:#726f66;
   --accent:#2c5c8a;
   --folder-blue:#4a90d9;
   --win-bg:#f5f4f2;
@@ -62,7 +62,13 @@ body{
   z-index:1000;font-size:12.5px;
 }
 .menubar-left{display:flex;align-items:center;gap:0;}
-.apple-logo{font-size:14px;margin-right:14px;cursor:default;}
+.apple-logo{
+  display:flex;align-items:center;
+  width:14px;height:16px;
+  margin-right:14px;cursor:default;
+  color:var(--text);
+}
+.apple-logo svg{width:100%;height:100%;display:block;}
 .menu-brand{font-weight:600;color:var(--text);margin-right:18px;cursor:default;}
 .menu-item{
   color:var(--text);padding:0 10px;height:28px;
@@ -72,7 +78,15 @@ body{
 }
 .menu-item:hover{background:rgba(0,0,0,0.07);}
 .menubar-right{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--muted);}
-.menu-icons{display:flex;align-items:center;gap:10px;font-size:13px;}
+.menu-icons{display:flex;align-items:center;gap:11px;}
+.mi{
+  display:flex;align-items:center;justify-content:center;
+  width:16px;height:16px;
+  color:var(--text);
+  opacity:0.85;
+}
+.mi svg{width:100%;height:100%;display:block;}
+.mi-siri{width:15px;height:15px;}
 #clock{font-size:12px;color:var(--text);min-width:160px;text-align:right;}
 
 /* ── DESKTOP ── */
@@ -108,7 +122,7 @@ body{
 }
 .desk-icon:active .icon-img{transform:scale(0.93);}
 .icon-label{
-  font-size:11.5px;color:var(--text);
+  font-size:12.5px;color:var(--text);
   text-align:center;line-height:1.3;
   padding:1px 4px;
   max-width:80px;
@@ -120,20 +134,27 @@ body{
 .sticky{
   position:absolute;
   top:48px;left:20px;
-  width:210px;
-  background:linear-gradient(175deg,#fdf8a0,#f5ef84);
-  border:0.5px solid rgba(180,170,0,0.3);
+  width:250px;
+  background:linear-gradient(175deg,#fdf3a0,#f6e685);
+  border:0.5px solid rgba(180,160,50,0.32);
   border-radius:2px 8px 8px 2px;
   padding:14px 14px 16px;
   box-shadow:2px 3px 12px rgba(0,0,0,0.12),0 1px 0 rgba(255,255,255,0.5) inset;
   z-index:10;
   cursor:default;
-  font-size:13px;
+  font-size:14px;
   line-height:1.65;
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s ease;
+  transform-origin:8% 12%;
 }
-.sticky-title{font-weight:600;font-size:13px;margin-bottom:8px;color:#3a3800;}
-.sticky-item{color:#3a3800;display:block;}
-.sticky-item.done{text-decoration:line-through;color:#8a8600;}
+.sticky:hover{
+  transform:scale(1.06) rotate(-3deg);
+  box-shadow:6px 12px 26px rgba(0,0,0,0.2),0 1px 0 rgba(255,255,255,0.5) inset;
+}
+.sticky.dragging{transition:none;}
+.sticky-title{font-weight:700;font-size:14px;margin-bottom:8px;color:#2c2a00;}
+.sticky-item{color:#2c2a00;display:block;}
+.sticky-item.done{text-decoration:line-through;color:#736e00;}
 
 /* ── WINDOWS ── */
 .win-overlay{
@@ -257,7 +278,7 @@ body{
 }
 .file-item:hover{background:rgba(0,0,0,0.06);}
 .file-item-icon{font-size:36px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));}
-.file-item-name{font-size:11px;color:var(--text);text-align:center;line-height:1.3;max-width:88px;}
+.file-item-name{font-size:12px;color:var(--text);text-align:center;line-height:1.3;max-width:88px;}
 
 /* ── PROJECT WINDOW (folder-style file view) ── */
 .project-header{
@@ -278,7 +299,7 @@ body{
   width:110px;cursor:pointer;
 }
 .project-file:hover{opacity:0.82;}
-.project-file-name{font-size:12.5px;color:var(--text);text-align:center;line-height:1.3;}
+.project-file-name{font-size:13.5px;color:var(--text);text-align:center;line-height:1.3;}
 
 .pf-folder{font-size:58px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));}
 
@@ -320,7 +341,7 @@ body{
 
 /* Text-file viewer window */
 .txt-viewer{
-  padding:26px 30px;font-size:14px;line-height:1.75;
+  padding:26px 30px;font-size:15px;line-height:1.75;
   color:var(--text);white-space:pre-wrap;
   overflow-y:auto;flex:1;min-height:0;
 }
@@ -342,7 +363,7 @@ body{
   margin-bottom:12px;line-height:1.15;
 }
 .win-page h2{font-size:15px;font-weight:600;margin-bottom:8px;margin-top:20px;color:var(--text);}
-.win-page p{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:8px;}
+.win-page p{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:8px;}
 .win-page .tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;}
 .win-tag{font-size:11.5px;padding:4px 10px;border-radius:20px;background:#e8e5e0;color:var(--muted);border:0.5px solid rgba(0,0,0,0.1);}
 .skill-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
@@ -360,8 +381,8 @@ body{
   border:0.5px solid rgba(0,0,0,0.07);
 }
 .resource-row-icon{font-size:22px;flex-shrink:0;}
-.resource-row-text .rname{font-size:13px;font-weight:500;color:var(--text);}
-.resource-row-text .rdesc{font-size:11.5px;color:var(--faint);}
+.resource-row-text .rname{font-size:14px;font-weight:500;color:var(--text);}
+.resource-row-text .rdesc{font-size:12.5px;color:var(--faint);}
 
 /* Archive grid */
 .archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
@@ -476,8 +497,8 @@ body{
   z-index:2;
 }
 .hero-sub{
-  font-size:16px;color:var(--muted);font-weight:300;
-  letter-spacing:0.01em;margin-bottom:4px;
+  font-size:22px;color:var(--text);font-weight:400;
+  letter-spacing:0.01em;margin-bottom:6px;
 }
 .hero-main{
   font-family:'Instrument Serif',serif;
@@ -509,18 +530,33 @@ body{
 <!-- MENU BAR -->
 <header class="menubar">
   <div class="menubar-left">
-    <span class="apple-logo">&#xf8ff;</span>
+    <span class="apple-logo" aria-hidden="true">
+      <svg viewBox="0 0 14 16" fill="currentColor"><path d="M11.2 8.5c0-2 1.6-3 1.7-3.1-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.2 2C-.1 8.3.7 12 2 14c.6.9 1.4 2 2.4 2 1 0 1.3-.6 2.5-.6s1.5.6 2.5.6c1 0 1.7-1 2.3-1.9.5-.8.8-1.6.8-1.7-.1 0-2.3-.9-2.3-3.4v-.5zM9.3 2.4c.5-.6.8-1.5.8-2.4-.7 0-1.6.5-2.2 1.1-.4.5-.8 1.4-.8 2.3.8.1 1.7-.4 2.2-1z"/></svg>
+    </span>
     <span class="menu-brand">Zara Khan's Portfolio</span>
     <span class="menu-item" onclick="openWindow('contact')">Contact</span>
     <span class="menu-item" onclick="openWindow('resume')">Resume</span>
   </div>
   <div class="menubar-right">
     <div class="menu-icons">
-      <span>&#9711;</span>
-      <span>&#9646;</span>
-      <span>&#8984;</span>
-      <span>&#9889;</span>
-      <span>&#128269;</span>
+      <span class="mi" title="Control Centre" aria-hidden="true">
+        <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="3" width="16" height="4.4" rx="2.2" fill="currentColor" opacity="0.16"/><circle cx="12" cy="5.2" r="2.6" fill="currentColor"/><rect x="1" y="10.6" width="16" height="4.4" rx="2.2" fill="currentColor" opacity="0.16"/><circle cx="6" cy="12.8" r="2.6" fill="currentColor"/></svg>
+      </span>
+      <span class="mi" title="Battery" aria-hidden="true">
+        <svg viewBox="0 0 26 13" fill="none"><rect x="0.75" y="0.75" width="21.5" height="11.5" rx="2.75" stroke="currentColor" stroke-width="1.1" opacity="0.5"/><rect x="2.3" y="2.3" width="16" height="8.4" rx="1.4" fill="currentColor"/><rect x="23.2" y="4" width="1.8" height="5" rx="0.9" fill="currentColor" opacity="0.5"/></svg>
+      </span>
+      <span class="mi" title="Wi-Fi" aria-hidden="true">
+        <svg viewBox="0 0 16 12" fill="currentColor"><path d="M8 10.6a1.15 1.15 0 100-2.3 1.15 1.15 0 000 2.3z"/><path d="M8 6.1c1.5 0 2.9.6 3.9 1.6l1.3-1.3C11.8 5 10 4.2 8 4.2S4.2 5 2.8 6.4l1.3 1.3C5.1 6.7 6.5 6.1 8 6.1z"/><path d="M8 2.1c2.6 0 5 1 6.8 2.8l1.3-1.3C13.9 1.4 11 0.1 8 0.1S2.1 1.4 0 3.6l1.3 1.3C3.1 3.1 5.4 2.1 8 2.1z" opacity="0.55"/></svg>
+      </span>
+      <span class="mi" title="Spotlight Search" aria-hidden="true">
+        <svg viewBox="0 0 15 15" fill="none"><circle cx="6.2" cy="6.2" r="4.7" stroke="currentColor" stroke-width="1.4"/><line x1="9.6" y1="9.6" x2="13.6" y2="13.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </span>
+      <span class="mi" title="Screen Mirroring" aria-hidden="true">
+        <svg viewBox="0 0 16 14" fill="none"><rect x="0.75" y="0.75" width="14.5" height="9.5" rx="1.4" stroke="currentColor" stroke-width="1.3"/><path d="M8 12.2l3 3H5l3-3z" fill="currentColor"/></svg>
+      </span>
+      <span class="mi mi-siri" title="Siri" aria-hidden="true">
+        <svg viewBox="0 0 16 16"><defs><linearGradient id="siriGrad" x1="0" y1="0" x2="16" y2="16"><stop offset="0%" stop-color="#3ea6ff"/><stop offset="35%" stop-color="#7c5cff"/><stop offset="65%" stop-color="#e05fd0"/><stop offset="100%" stop-color="#ff7a6e"/></linearGradient></defs><circle cx="8" cy="8" r="7.3" fill="url(#siriGrad)"/></svg>
+      </span>
     </div>
     <span id="clock"></span>
   </div>
@@ -536,14 +572,10 @@ body{
     <span class="sticky-item">Drink water</span>
     <span class="sticky-item done">Move to the UK</span>
     <span class="sticky-item">Finish portfolio without losing my mind</span>
-    <span class="sticky-item">Build that banger spotify playlist</span>
-    <span class="sticky-item">World domination</span>
-    <span class="sticky-item done">Get really good at making pasta</span>
-    <span class="sticky-item">Travel somewhere new every year</span>
   </div>
 
   <!-- RESUME FILE — top right -->
-  <div class="desk-icon" id="icon-resume" style="right:160px;top:68px;" data-drag="true" data-open="resume">
+  <div class="desk-icon" id="icon-resume" style="left:65%;top:14%;" data-drag="true" data-open="resume">
     <div class="icon-img">📄</div>
     <div class="icon-label">Resume.pdf</div>
   </div>
@@ -555,21 +587,21 @@ body{
   </div>
 
   <!-- PROJECT FOLDERS — bottom left -->
-  <div class="desk-icon" id="icon-p1" style="left:60px;bottom:180px;" data-drag="true" data-open="p1">
+  <div class="desk-icon" id="icon-p1" style="left:29%;top:36%;" data-drag="true" data-open="p1">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 01 (Verdant Studio)</div>
   </div>
-  <div class="desk-icon" id="icon-p2" style="left:60px;bottom:100px;" data-drag="true" data-open="p2">
+  <div class="desk-icon" id="icon-p2" style="left:9%;top:50%;" data-drag="true" data-open="p2">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 02 (Ōra Ceramics)</div>
   </div>
-  <div class="desk-icon" id="icon-p3" style="left:60px;bottom:20px;" data-drag="true" data-open="p3">
+  <div class="desk-icon" id="icon-p3" style="left:24%;top:80%;" data-drag="true" data-open="p3">
     <div class="icon-img">📁</div>
     <div class="icon-label">Project 03 (Meridian)</div>
   </div>
 
   <!-- TRASH — bottom right -->
-  <div class="desk-icon" id="icon-trash" style="right:60px;bottom:40px;" data-drag="true">
+  <div class="desk-icon" id="icon-trash" style="left:73%;top:78%;" data-drag="true">
     <div class="icon-img">🗑️</div>
     <div class="icon-label">Trash</div>
   </div>
@@ -671,7 +703,7 @@ document.querySelectorAll('[data-split]').forEach(splitIntoLetters);
   if(heroSubLetters.length===0 && heroMainLetters.length===0)return;
 
   // Tuning per text size — bigger text gets a bigger radius & gentler scale
-  const CONFIG_SUB ={radius:90, maxScale:1.6, maxLift:-6,  boldAt:0.55};
+  const CONFIG_SUB ={radius:105, maxScale:1.5, maxLift:-8,  boldAt:0.55};
   const CONFIG_MAIN={radius:170,maxScale:1.28,maxLift:-16, boldAt:0.5};
 
   let mouseX=-9999,mouseY=-9999;
@@ -1101,6 +1133,34 @@ I work across brand identity, editorial, and packaging — often for studios and
   }
 };
 
+function getWindowPosition(id,cfg){
+  // Special case: the About Me pair should sit side-by-side,
+  // like a photo with its caption note next to it — never overlapping.
+  if(id==='about-photo'){
+    return {left:Math.max(80,window.innerWidth*0.15),top:110};
+  }
+  if(id==='about'){
+    const photoWin=openWindows['about-photo'];
+    if(photoWin){
+      const pLeft=parseInt(photoWin.style.left,10)||0;
+      const pTop=parseInt(photoWin.style.top,10)||0;
+      const pWidth=photoWin.offsetWidth||360;
+      return {left:pLeft+pWidth+46,top:pTop+130};
+    }
+    return {left:Math.max(80,window.innerWidth*0.15)+430,top:240};
+  }
+
+  // Default: cascade each new window a bit further than the last,
+  // wrapping back around before it runs off-screen.
+  if(cascadeX+cfg.width>window.innerWidth-40 || cascadeY+cfg.height>window.innerHeight-140){
+    cascadeX=110;cascadeY=80;
+  }
+  const pos={left:cascadeX,top:cascadeY};
+  cascadeX+=42;cascadeY+=38;
+  return pos;
+}
+let cascadeX=110,cascadeY=80;
+
 function openWindow(id){
   if(openWindows[id]){
     focusWindow(openWindows[id]);
@@ -1112,13 +1172,14 @@ function openWindow(id){
   overlay.classList.add('has-windows');
   zTop+=2;
 
+  const pos=getWindowPosition(id,cfg);
   const w=document.createElement('div');
   w.className='window focused';
   w.style.cssText=`
     width:${cfg.width}px;
     height:${cfg.height}px;
-    top:${80+Math.random()*80}px;
-    left:${120+Math.random()*120}px;
+    top:${pos.top}px;
+    left:${pos.left}px;
     z-index:${zTop};
   `;
 
@@ -1225,6 +1286,21 @@ function closeWindow(id,e){
     if(dBtn)dBtn.classList.remove('open');
   },160);
 }
+
+function closeAllWindows(){
+  Object.keys(openWindows).forEach(id=>closeWindow(id));
+}
+
+/* Click outside any open window closes it.
+   Runs on the CAPTURE phase so it always fires before
+   a dock/menu/icon's own click handler — meaning if you
+   click something that opens a new window, the old ones
+   close first and the new one still opens cleanly. */
+document.addEventListener('mousedown',function(e){
+  if(Object.keys(openWindows).length===0)return;
+  if(e.target.closest('.window'))return;
+  closeAllWindows();
+},true);
 
 function handleForm(e){
   e.preventDefault();
