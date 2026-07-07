@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zara Khan — Graphic Designer</title>
-<meta name="description" content="Zara Khan is a graphic designer crafting purposeful visuals, brand identities, and digital experiences.">
-<meta property="og:title" content="Zara Khan — Graphic Designer">
+<title>Zara Khan — Digital Marketing</title>
+<meta name="description" content="Zara Khan is a digital marketer crafting purposeful visuals, brand identities, and digital experiences.">
+<meta property="og:title" content="Zara Khan — Digital Marketing">
 <meta property="og:description" content="Crafting purposeful visuals, brand identities, and digital experiences.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -423,11 +423,15 @@ body{
 .dock-item:hover .dock-tip{opacity:1;transform:translateX(-50%) translateY(0);}
 .dock-icon-img{
   width:52px;height:52px;
-  border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   font-size:26px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  transition:box-shadow var(--transition);
+  transition:transform var(--transition);
+}
+.dock-icon-img img{
+  width:100%;height:100%;
+  object-fit:contain;
+  pointer-events:none;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.2));
 }
 .dock-dot{
   width:4px;height:4px;border-radius:50%;
@@ -559,9 +563,9 @@ body{
   <!-- STICKY NOTE -->
   <div class="sticky" id="sticky" data-drag="true">
     <div class="sticky-title">To do:</div>
-    <span class="sticky-item">Land my dream design job</span>
-    <span class="sticky-item">Drink water</span>
-    <span class="sticky-item done">Move to the UK</span>
+    <span class="sticky-item">Land my dream job</span>
+    <span class="sticky-item done">Drink water</span>
+    <span class="sticky-item">Visit to the UK</span>
     <span class="sticky-item">Finish portfolio without losing my mind</span>
   </div>
 
