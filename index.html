@@ -392,11 +392,22 @@ body{
   font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;
   color:rgba(0,0,0,0.35);border:0.5px dashed rgba(0,0,0,0.15);
   background:#e8e5e0;
-  cursor:default;
-  transition:background 0.15s;
+  cursor:pointer;
+  transition:background 0.15s,transform 0.15s;
+  position:relative;
+  overflow:hidden;
 }
-.archive-cell:hover{background:#ddd9d2;}
-.archive-cell span{font-size:11px;font-style:normal;font-family:'Inter',sans-serif;color:var(--faint);}
+.archive-cell:hover{background:#ddd9d2;transform:scale(1.03);}
+.archive-cell img{width:100%;height:100%;object-fit:cover;}
+.archive-cell span{font-size:11px;font-style:normal;font-family:'Inter',sans-serif;color:var(--faint);padding:0 8px;text-align:center;}
+.archive-video-badge{
+  position:absolute;top:6px;right:6px;
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(0,0,0,0.55);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;
+  pointer-events:none;
+}
 
 /* ── DOCK ── */
 .dock-wrap{
@@ -851,46 +862,52 @@ let openWindows={};
 
 /* ═══════════════════════════════════════
    PROJECT DATA — edit this to update your
-   project folders' content and links
+   internship folders' content and links
 ═══════════════════════════════════════ */
 const PROJECTS={
   p1:{
-    title:'Verdant Studio (Project 01)',
-    subtitle:'Brand Identity Design',
-    figmaUrl:'https://www.figma.com/your-verdant-case-study-link',
-    videoUrl:'https://your-video-host.com/verdantstudio.mov',
-    videoLabel:'verdantstudio.mov',
-    tldr:`Full brand identity for a sustainable design consultancy — logomark, colour system, typography, and stationery suite.
+    title:'The Trops (Project 01)',
+    subtitle:'Event & Content Internship',
+    archiveCategory:'trops',
+    extraFile:{
+      type:'doc',
+      url:'https://docs.google.com/your-trops-doc-link',
+      label:'trops-recap.doc'
+    },
+    tldr:`Event management, digital media editing, and content creation for The Trops.
 
-This project involved deep collaborative work with the founders to translate their sustainability-first values into a visual language: an earthy, restrained palette, a modular logomark that adapts across formats, and a full stationery and print system.
+Worked across live event coordination and content production — planning on-the-ground logistics while also shooting and editing photo/video content for the brand's social channels.
 
-Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+Click the Archive icon to see photos and reels from this role, or open the recap doc for a full write-up.`
   },
   p2:{
-    title:'Ōra Ceramics (Project 02)',
-    subtitle:'Packaging & Brand Identity',
-    figmaUrl:'https://www.figma.com/your-ora-case-study-link',
-    videoUrl:'https://your-video-host.com/oraceramics.mov',
-    videoLabel:'oraceramics.mov',
-    tldr:`Packaging design and brand language for a Lisbon-based artisan ceramics label, sold across Europe.
+    title:'Grammercy Global (Project 02)',
+    subtitle:'Digital Marketing Internship',
+    archiveCategory:'grammercy',
+    extraFile:{
+      type:'sheet',
+      url:'https://docs.google.com/spreadsheets/your-grammercy-sheet-link',
+      label:'grammercy-data.sheet'
+    },
+    tldr:`Formulating targeted ads, web management, and content creation for Grammercy Global.
 
-The brief called for packaging that felt handmade and premium without losing shelf presence — resulting in a warm, tactile system built around unbleached kraft stock, a custom wordmark, and a considered colour system pulled from the clay itself.
+Focused on paid ad targeting and performance, ongoing website upkeep, and producing content to support marketing campaigns.
 
-Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+Click the Archive icon to see visuals from this role, or open the data sheet for campaign performance details.`
   },
   p3:{
-    title:'Meridian Annual Report (Project 03)',
-    subtitle:'Editorial Design',
-    figmaUrl:'https://www.figma.com/your-meridian-case-study-link',
-    videoUrl:'https://your-video-host.com/meridian.mov',
-    videoLabel:'meridian.mov',
-    tldr:`100-page editorial design for Meridian Architecture — art direction, typographic system, data visualisation, and infographics.
+    title:'LPIE (Project 03)',
+    subtitle:'Digital Media Internship',
+    archiveCategory:'lpie',
+    extraFile:null,
+    tldr:`Digital media management and content creation for LPIE.
 
-The report needed to balance dense financial and project data with a design language that felt confident and architectural. The result was a strict grid system, a custom infographic language, and a typographic hierarchy built to guide readers through 100 pages without fatigue.
+Managed digital media output and produced content across formats, including short-form video for social platforms.
 
-Click "Full case study.fig" to see the entire process, from early sketches to final delivery.`
+Click the Archive icon to see photos and reels from this role.`
   }
 };
+
 
 function openExternal(url){
   window.open(url,'_blank','noopener');
@@ -898,24 +915,30 @@ function openExternal(url){
 
 function renderProjectFiles(id){
   const p=PROJECTS[id];
+  let extraHtml='';
+  if(p.extraFile){
+    const isSheet=p.extraFile.type==='sheet';
+    extraHtml=`
+      <div class="project-file" onclick="openExternal('${p.extraFile.url}')" title="Opens in a new tab">
+        <div class="pf-folder">${isSheet?'📊':'📄'}</div>
+        <div class="project-file-name">${p.extraFile.label}</div>
+      </div>`;
+  }
   return `
     <div class="project-header">
       <h2>${p.title}</h2>
       <p>${p.subtitle}</p>
     </div>
     <div class="project-files">
-      <div class="project-file" onclick="openExternal('${p.figmaUrl}')" title="Opens Figma in a new tab">
-    <div class="pf-folder"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div>
-        <div class="project-file-name">Full case study.fig</div>
+      <div class="project-file" onclick="openArchiveTab('${p.archiveCategory}')" title="Opens the Archive app">
+        <div class="pf-folder">🗃️</div>
+        <div class="project-file-name">Archive</div>
       </div>
       <div class="project-file" onclick="openWindow('txt-${id}')" title="Opens project summary">
-      <div class="pf-txt">📄</div>
+        <div class="pf-txt"><span></span><span></span><span></span><div class="pf-thumb"></div></div>
         <div class="project-file-name">TL;DR.txt</div>
       </div>
-      <div class="project-file" onclick="openExternal('${p.videoUrl}')" title="Opens video in a new tab">
-        <div class="pf-video"></div>
-        <div class="project-file-name">${p.videoLabel}</div>
-      </div>
+      ${extraHtml}
     </div>`;
 }
 
@@ -923,6 +946,93 @@ function renderTxtViewer(id){
   const p=PROJECTS[id];
   return `<div class="txt-viewer">${p.tldr}</div>`;
 }
+
+/* ═══════════════════════════════════════
+   ARCHIVE DATA — edit this to add your own
+   photos and videos, sorted by category.
+   type can be 'image' or 'video'.
+   For a video, either set "src" to a direct
+   video file URL (plays inline), or set
+   "instagramUrl" to link out to a Reel
+   (Instagram can't be embedded in a static
+   page, so those open in a new tab instead).
+═══════════════════════════════════════ */
+const ARCHIVE_ITEMS=[
+  {id:'trops1',category:'trops',type:'image',src:'',caption:'The Trops — Image 1'},
+  {id:'trops2',category:'trops',type:'video',src:'',instagramUrl:'',caption:'The Trops — Reel 1'},
+  {id:'trops3',category:'trops',type:'image',src:'',caption:'The Trops — Image 2'},
+
+  {id:'gram1',category:'grammercy',type:'image',src:'',caption:'Grammercy Global — Image 1'},
+  {id:'gram2',category:'grammercy',type:'image',src:'',caption:'Grammercy Global — Image 2'},
+  {id:'gram3',category:'grammercy',type:'image',src:'',caption:'Grammercy Global — Image 3'},
+
+  {id:'lpie1',category:'lpie',type:'image',src:'',caption:'LPIE — Image 1'},
+  {id:'lpie2',category:'lpie',type:'video',src:'',instagramUrl:'',caption:'LPIE — Reel 1'},
+  {id:'lpie3',category:'lpie',type:'image',src:'',caption:'LPIE — Image 2'},
+
+  {id:'psych1',category:'psych',type:'image',src:'',caption:'Psychology Club — Image 1'},
+  {id:'psych2',category:'psych',type:'image',src:'',caption:'Psychology Club — Image 2'},
+  {id:'psych3',category:'psych',type:'image',src:'',caption:'Psychology Club — Image 3'}
+];
+
+function renderArchiveGrid(category){
+  const items=category==='all' ? ARCHIVE_ITEMS : ARCHIVE_ITEMS.filter(i=>i.category===category);
+  if(items.length===0){
+    return `<p style="padding:20px;color:var(--faint);font-size:13px;">No items yet — add some to ARCHIVE_ITEMS in the script.</p>`;
+  }
+  return `<div class="archive-grid">
+    ${items.map(item=>`
+      <div class="archive-cell" onclick="openArchiveItem('${item.id}')" title="${item.caption}">
+        ${item.type==='video' ? '<div class="archive-video-badge">▶</div>' : ''}
+        ${item.src ? `<img src="${item.src}" alt="${item.caption}">` : `<span>${item.caption}</span>`}
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function renderArchiveViewer(item){
+  if(item.type==='video'){
+    if(item.src){
+      return `<video src="${item.src}" controls autoplay style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
+    }
+    if(item.instagramUrl){
+      return `<div class="photo-placeholder" style="cursor:pointer;" onclick="openExternal('${item.instagramUrl}')">
+        <div class="photo-placeholder-icon">▶️</div>
+        <div class="photo-placeholder-text">Watch on Instagram ↗</div>
+      </div>`;
+    }
+    return `<div class="photo-placeholder"><div class="photo-placeholder-icon">🎬</div><div class="photo-placeholder-text">Add a video source</div></div>`;
+  }
+  if(item.src){
+    return `<img src="${item.src}" style="width:100%;height:100%;object-fit:contain;background:#000;">`;
+  }
+  return `<div class="photo-placeholder"><div class="photo-placeholder-icon">🖼️</div><div class="photo-placeholder-text">${item.caption}</div></div>`;
+}
+
+function openArchiveItem(id){
+  const item=ARCHIVE_ITEMS.find(i=>i.id===id);
+  if(!item)return;
+  const winId='archive-view-'+id;
+  if(!winConfigs[winId]){
+    winConfigs[winId]={
+      title:item.caption,
+      width:item.type==='video' ? 480:460,
+      height:item.type==='video' ? 420:460,
+      flush:true,
+      render:()=>renderArchiveViewer(item)
+    };
+  }
+  openWindow(winId);
+}
+
+function openArchiveTab(category){
+  openWindow('archive');
+  const win=openWindows['archive'];
+  if(!win)return;
+  const sidebarItem=win.querySelector(`.sidebar-item[data-tab="${category}"]`);
+  if(sidebarItem)switchTab(sidebarItem);
+}
+
 
 const winConfigs={
   about:{
@@ -978,21 +1088,21 @@ const winConfigs={
     sidebarItems:[
       {icon:'📁',label:'All Projects',active:true,render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
-          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
-          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>The Trops</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Grammercy Global</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>LPIE</div></div>
         </div>`},
-      {icon:'🏷️',label:'Branding',render:()=>`
+      {icon:'🌴',label:'The Trops',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>Verdant Studio</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01<br>The Trops</div></div>
         </div>`},
-      {icon:'📦',label:'Packaging',render:()=>`
+      {icon:'🏙️',label:'Grammercy Global',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Ōra Ceramics</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02<br>Grammercy Global</div></div>
         </div>`},
-      {icon:'📰',label:'Editorial',render:()=>`
+      {icon:'🎬',label:'LPIE',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>Meridian</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03<br>LPIE</div></div>
         </div>`}
     ]
   },
@@ -1033,25 +1143,15 @@ const winConfigs={
     render:()=>renderTxtViewer('p3')
   },
   archive:{
-    title:'Archive — Photos & Process',
+    title:'Archive',
     width:620,height:480,
     finder:true,
     sidebarItems:[
-      {icon:'🗃️',label:'All',active:true,render:()=>`
-        <div class="archive-grid">
-          ${[1,2,3,4,5,6].map(i=>`<div class="archive-cell"><span>Image ${i}</span></div>`).join('')}
-        </div>
-        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Replace placeholders with your images</p>`},
-      {icon:'📷',label:'Photos',render:()=>`
-        <div class="archive-grid">
-          ${[1,2,3].map(i=>`<div class="archive-cell"><span>Photo ${i}</span></div>`).join('')}
-        </div>
-        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add your photography here</p>`},
-      {icon:'✏️',label:'Sketches',render:()=>`
-        <div class="archive-grid">
-          ${[1,2,3].map(i=>`<div class="archive-cell"><span>Sketch ${i}</span></div>`).join('')}
-        </div>
-        <p style="margin-top:14px;font-size:12px;color:var(--faint);">Add process sketches here</p>`}
+      {icon:'🗃️',label:'All',tab:'all',active:true,render:()=>renderArchiveGrid('all')},
+      {icon:'🌴',label:'The Trops',tab:'trops',render:()=>renderArchiveGrid('trops')},
+      {icon:'🏙️',label:'Grammercy Global',tab:'grammercy',render:()=>renderArchiveGrid('grammercy')},
+      {icon:'🎬',label:'LPIE',tab:'lpie',render:()=>renderArchiveGrid('lpie')},
+      {icon:'🧠',label:'Psychology Club',tab:'psych',render:()=>renderArchiveGrid('psych')}
     ]
   },
   resources:{
