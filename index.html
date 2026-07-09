@@ -40,6 +40,17 @@ body{
   position:relative;
 }
 
+/* ── GRID BACKGROUND ── */
+.desktop-grid{
+  position:fixed;inset:0;
+  background-image:url('background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  pointer-events:none;
+  z-index:0;
+}
+
 /* ── MENU BAR ── */
 .menubar{
   position:fixed;top:0;left:0;right:0;height:28px;
@@ -1039,7 +1050,7 @@ const winConfigs={
   },
   resume:{
     title:'Resume.pdf',
-    width:590,height:520,
+    width:580,height:520,
     render:()=>`
       <div class="win-page">
         <h1>Zara Khan</h1>
