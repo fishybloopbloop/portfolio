@@ -588,7 +588,7 @@ body{
 
   <!-- ABOUT ME FOLDER — top right -->
   <div class="desk-icon" id="icon-about" style="left:78%;top:26%;" data-drag="true" data-open="about-photo,about">
-    <div class="icon-img"><img src="icon-about.png" style="width:100%;height:100%;object-fit:contain;"></div>
+    <div class="icon-img"><img src="notes-icon.png" style="width:100%;height:100%;object-fit:contain;"></div>
     <div class="icon-label">About Me</div>
   </div>
 
@@ -866,8 +866,8 @@ let openWindows={};
 ═══════════════════════════════════════ */
 const PROJECTS={
   p1:{
-    title:'The Trops (Project 01)',
-    subtitle:'Event & Content Internship',
+    title:'The Trops',
+    subtitle:'Digital Marketing Internship',
     archiveCategory:'trops',
     extraFile:{
       type:'doc',
@@ -881,8 +881,8 @@ Worked across live event coordination and content production — planning on-the
 Click the Archive icon to see photos and reels from this role, or open the recap doc for a full write-up.`
   },
   p2:{
-    title:'Grammercy Global (Project 02)',
-    subtitle:'Digital Marketing Internship',
+    title:'Grammercy Global',
+    subtitle:'Online Marketing & Web Design Internship',
     archiveCategory:'grammercy',
     extraFile:{
       type:'sheet',
@@ -896,8 +896,8 @@ Focused on paid ad targeting and performance, ongoing website upkeep, and produc
 Click the Archive icon to see visuals from this role, or open the data sheet for campaign performance details.`
   },
   p3:{
-    title:'LPIE (Project 03)',
-    subtitle:'Digital Media Internship',
+    title:'LPIE',
+    subtitle:'Social Media Marketing Internship',
     archiveCategory:'lpie',
     extraFile:null,
     tldr:`Digital media management and content creation for LPIE.
@@ -931,7 +931,7 @@ function renderProjectFiles(id){
     </div>
     <div class="project-files">
       <div class="project-file" onclick="openArchiveTab('${p.archiveCategory}')" title="Opens the Archive app">
-        <div class="pf-folder">🗃️</div>
+        <div class="pf-folder" style="background:none;"><img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;"></div>
         <div class="project-file-name">Archive</div>
       </div>
       <div class="project-file" onclick="openWindow('txt-${id}')" title="Opens project summary">
