@@ -260,7 +260,19 @@ body{
 }
 .sidebar-item:hover{background:rgba(0,0,0,0.07);}
 .sidebar-item.active{background:rgba(44,92,138,0.15);color:var(--accent);}
-.sidebar-icon{font-size:13px;}
+.sidebar-icon{
+  font-size:13px;
+  width:15px;height:15px;
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.sidebar-icon img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+  min-width:0;min-height:0;
+}
 .win-content{flex:1;overflow-y:auto;padding:20px;}
 .win-content::-webkit-scrollbar{width:6px;}
 .win-content::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:3px;}
@@ -1146,12 +1158,12 @@ const winConfigs={
     title:'Archive',
     width:620,height:480,
     finder:true,
-    sidebarItems:[
-      {icon:'<img src="photos-icon.png" style="width:30%;height:30%;object-fit:contain;">',label:'All',tab:'all',active:true,render:()=>renderArchiveGrid('all')},
-      {icon:'<img src="green.png" style="width:100%;height:100%;object-fit:contain;">',label:'The Trops',tab:'trops',render:()=>renderArchiveGrid('trops')},
-      {icon:'<img src="orange.png" style="width:100%;height:100%;object-fit:contain;">',label:'Grammercy Global',tab:'grammercy',render:()=>renderArchiveGrid('grammercy')},
-      {icon:'<img src="blue.png" style="width:100%;height:100%;object-fit:contain;">',label:'LPIE',tab:'lpie',render:()=>renderArchiveGrid('lpie')},
-      {icon:'<img src="purple.png" style="width:100%;height:100%;object-fit:contain;">',label:'Psychology Club',tab:'psych',render:()=>renderArchiveGrid('psych')}
+     sidebarItems:[
+      {icon:'<img src="photos-icon.png">',label:'All',tab:'all',active:true,render:()=>renderArchiveGrid('all')},
+      {icon:'<img src="green.png">',label:'The Trops',tab:'trops',render:()=>renderArchiveGrid('trops')},
+      {icon:'<img src="orange.png">',label:'Grammercy Global',tab:'grammercy',render:()=>renderArchiveGrid('grammercy')},
+      {icon:'<img src="blue.png">',label:'LPIE',tab:'lpie',render:()=>renderArchiveGrid('lpie')},
+      {icon:'<img src="purple.png">',label:'Psychology Club',tab:'psych',render:()=>renderArchiveGrid('psych')}
     ]
   },
   resources:{
