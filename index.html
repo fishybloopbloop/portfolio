@@ -1227,15 +1227,15 @@ const winConfigs={
     title:'Finder',
     width:660,height:440,
     finder:true,
-    sidebarItems:[{icon:'🏠',label:'Home',active:true},{icon:'📁',label:'Projects'},{icon:'🗃️',label:'Archive'},{icon:'📚',label:'Resources'}],
+    sidebarItems:[{icon:'<img src="download.png" style="width:100%;height:100%;object-fit:contain;">',label:'All',active:true},{icon:'<img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;">',label:'Projects'},{icon:'<img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;">',label:'Archive'},{icon:'<img src="books-icon.png" style="width:100%;height:100%;object-fit:contain;">',label:'Resources'}],
     render:()=>`
       <div class="file-grid">
-        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon">📁</div><div class="file-item-name">About Me</div></div>
-        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 01</div></div>
-        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 02</div></div>
-        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon">📁</div><div class="file-item-name">Project 03</div></div>
-        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon">🗃️</div><div class="file-item-name">Archive</div></div>
-        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon">📚</div><div class="file-item-name">Resources</div></div>
+        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">About Me</div></div>
+        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 01</div></div>
+        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 02</div></div>
+        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 03</div></div>
+        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Archive</div></div>
+        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Resources</div></div>
         <div class="file-item" onclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
         <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
       </div>`
