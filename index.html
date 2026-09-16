@@ -120,6 +120,12 @@ body{
   transition:transform 0.1s ease;
   pointer-events:none;
 }
+.icon-img img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+  min-width:0;min-height:0;
+}
 .desk-icon:active .icon-img{transform:scale(0.93);}
 .icon-label{
   font-size:12.5px;color:var(--text);
@@ -289,7 +295,18 @@ body{
   transition:background 0.12s;
 }
 .file-item:hover{background:rgba(0,0,0,0.06);}
-.file-item-icon{font-size:36px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));}
+.file-item-icon{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;line-height:1;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.file-item-icon img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+  min-width:0;min-height:0;
+}
 .file-item-name{font-size:12px;color:var(--text);text-align:center;line-height:1.3;max-width:88px;}
 
 /* ── PROJECT WINDOW (folder-style file view) ── */
@@ -313,7 +330,18 @@ body{
 .project-file:hover{opacity:0.82;}
 .project-file-name{font-size:13.5px;color:var(--text);text-align:center;line-height:1.3;}
 
-.pf-folder{font-size:58px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));}
+.pf-folder{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;line-height:1;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));
+}
+.pf-folder img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+  min-width:0;min-height:0;
+}
 
 .pf-video{
   width:58px;height:58px;border-radius:50%;
@@ -943,7 +971,7 @@ function renderProjectFiles(id){
     </div>
     <div class="project-files">
       <div class="project-file" onclick="openArchiveTab('${p.archiveCategory}')" title="Opens the Archive app">
-        <div class="pf-folder" style="background:none;"><img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;"></div>
+        <div class="pf-folder"><img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;"></div>
         <div class="project-file-name">Archive</div>
       </div>
       <div class="project-file" onclick="openWindow('txt-${id}')" title="Opens project summary">
@@ -1098,23 +1126,23 @@ const winConfigs={
     width:660,height:460,
     finder:true,
     sidebarItems:[
-      {icon:'<img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;">',label:'All Projects',active:true,render:()=>`
+      {icon:'<img src="icon-p1.png">',label:'All Projects',active:true,render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">The Trops</div></div>
-          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Grammercy Global</div></div>
-          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">LPIE</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">The Trops</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Grammercy Global</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">LPIE</div></div>
         </div>`},
-      {icon:'<img src="green.png" style="width:100%;height:100%;object-fit:contain;">',label:'The Trops',render:()=>`
+      {icon:'<img src="green.png">',label:'The Trops',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 01<br>The Trops</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">Project 01<br>The Trops</div></div>
         </div>`},
-      {icon:'<img src="orange.png" style="width:100%;height:100%;object-fit:contain;">',label:'Grammercy Global',render:()=>`
+      {icon:'<img src="orange.png">',label:'Grammercy Global',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 02<br>Grammercy Global</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Project 02<br>Grammercy Global</div></div>
         </div>`},
-      {icon:'<img src="blue.png" style="width:100%;height:100%;object-fit:contain;">',label:'LPIE',render:()=>`
+      {icon:'<img src="blue.png">',label:'LPIE',render:()=>`
         <div class="file-grid">
-          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 03<br>LPIE</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">Project 03<br>LPIE</div></div>
         </div>`}
     ]
   },
@@ -1171,7 +1199,7 @@ const winConfigs={
     width:580,height:460,
     finder:true,
     sidebarItems:[
-      {icon:'📚',label:'All',active:true,render:()=>`
+      {icon:'<img src="download.png">',label:'All',active:true,render:()=>`
         <div style="padding:4px 0;">
           <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;">Typography</p>
           <div class="resource-list">
@@ -1185,7 +1213,7 @@ const winConfigs={
             <div class="resource-row"><span class="resource-row-icon">Be</span><div class="resource-row-text"><p class="rname">Behance</p><p class="rdesc">Portfolio inspiration</p></div></div>
           </div>
         </div>`},
-      {icon:'🔤',label:'Typography',render:()=>`
+      {icon:'<img src="typography-icon.png">',label:'Typography',render:()=>`
         <div style="padding:4px 0;">
           <div class="resource-list">
             <div class="resource-row"><span class="resource-row-icon">Gg</span><div class="resource-row-text"><p class="rname">Google Fonts</p><p class="rdesc">Free open-source typefaces</p></div></div>
@@ -1193,7 +1221,7 @@ const winConfigs={
             <div class="resource-row"><span class="resource-row-icon">Ty</span><div class="resource-row-text"><p class="rname">Typewolf</p><p class="rdesc">Font pairing inspiration</p></div></div>
           </div>
         </div>`},
-      {icon:'🎨',label:'Design Tools',render:()=>`
+      {icon:'<img src="design-tools-icon.png">',label:'Design Tools',render:()=>`
         <div style="padding:4px 0;">
           <div class="resource-list">
             <div class="resource-row"><span class="resource-row-icon">Fi</span><div class="resource-row-text"><p class="rname">Figma</p><p class="rdesc">Interface design &amp; prototyping</p></div></div>
@@ -1227,15 +1255,15 @@ const winConfigs={
     title:'Finder',
     width:660,height:440,
     finder:true,
-    sidebarItems:[{icon:'<img src="download.png" style="width:100%;height:100%;object-fit:contain;">',label:'All',active:true},{icon:'<img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;">',label:'Projects'},{icon:'<img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;">',label:'Archive'},{icon:'<img src="books-icon.png" style="width:100%;height:100%;object-fit:contain;">',label:'Resources'}],
+    sidebarItems:[{icon:'<img src="download.png">',label:'All',active:true},{icon:'<img src="icon-p1.png">',label:'Projects'},{icon:'<img src="photos-icon.png">',label:'Archive'},{icon:'<img src="books-icon.png">',label:'Resources'}],
     render:()=>`
       <div class="file-grid">
-        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">About Me</div></div>
-        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 01</div></div>
-        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 02</div></div>
-        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p1.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Project 03</div></div>
-        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Archive</div></div>
-        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png" style="width:100%;height:100%;object-fit:contain;"></div><div class="file-item-name">Resources</div></div>
+        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon"><img src="notes-icon.png"></div><div class="file-item-name">About Me</div></div>
+        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">Project 01</div></div>
+        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Project 02</div></div>
+        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">Project 03</div></div>
+        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png"></div><div class="file-item-name">Archive</div></div>
+        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png"></div><div class="file-item-name">Resources</div></div>
         <div class="file-item" onclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
         <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
       </div>`
