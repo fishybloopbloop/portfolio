@@ -1255,18 +1255,33 @@ const winConfigs={
     title:'Finder',
     width:660,height:440,
     finder:true,
-    sidebarItems:[{icon:'<img src="download.png">',label:'All',active:true},{icon:'<img src="icon-p1.png">',label:'Projects'},{icon:'<img src="photos-icon.png">',label:'Archive'},{icon:'<img src="books-icon.png">',label:'Resources'}],
-    render:()=>`
-      <div class="file-grid">
-        <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon"><img src="notes-icon.png"></div><div class="file-item-name">About Me</div></div>
-        <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">Project 01</div></div>
-        <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Project 02</div></div>
-        <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">Project 03</div></div>
-        <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png"></div><div class="file-item-name">Archive</div></div>
-        <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png"></div><div class="file-item-name">Resources</div></div>
-        <div class="file-item" onclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
-        <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
-      </div>`
+    sidebarItems:[
+      {icon:'<img src="download.png">',label:'All',tab:'all',active:true,render:()=>`
+        <div class="file-grid">
+          <div class="file-item" onclick="openWindow('about-photo');openWindow('about')"><div class="file-item-icon"><img src="notes-icon.png"></div><div class="file-item-name">About Me</div></div>
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">Project 01</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Project 02</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">Project 03</div></div>
+          <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png"></div><div class="file-item-name">Archive</div></div>
+          <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png"></div><div class="file-item-name">Resources</div></div>
+          <div class="file-item" onclick="openWindow('contact')"><div class="file-item-icon">✉️</div><div class="file-item-name">Contact</div></div>
+          <div class="file-item"><div class="file-item-icon">📄</div><div class="file-item-name">Resume.pdf</div></div>
+        </div>`},
+      {icon:'<img src="icon-p1.png">',label:'Projects',tab:'projects',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" onclick="openWindow('p1')"><div class="file-item-icon"><img src="icon-p1.png"></div><div class="file-item-name">Project 01</div></div>
+          <div class="file-item" onclick="openWindow('p2')"><div class="file-item-icon"><img src="icon-p2.png"></div><div class="file-item-name">Project 02</div></div>
+          <div class="file-item" onclick="openWindow('p3')"><div class="file-item-icon"><img src="icon-p3.png"></div><div class="file-item-name">Project 03</div></div>
+        </div>`},
+      {icon:'<img src="photos-icon.png">',label:'Archive',tab:'archive',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" onclick="openWindow('archive')"><div class="file-item-icon"><img src="photos-icon.png"></div><div class="file-item-name">Archive</div></div>
+        </div>`},
+      {icon:'<img src="books-icon.png">',label:'Resources',tab:'resources',render:()=>`
+        <div class="file-grid">
+          <div class="file-item" onclick="openWindow('resources')"><div class="file-item-icon"><img src="books-icon.png"></div><div class="file-item-name">Resources</div></div>
+        </div>`}
+    ]
   }
 };
 
